@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="阿蘇うま牧場の乗馬体験ご予約フォームです。">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#1E3A2F;--earth:#6B4226;
+  --gold:#C49A30;--gold2:#E8BE5A;--cream:#F7F2E6;--cream2:#EDE6D4;
+  --dark:#14100A;--muted:#8C7B65;--text:#2A1F14;
+  --ok:#2D6A4F;--err:#8B1A1A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Serif JP',serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(20,16,10,.96);padding:.9rem 4rem;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(14px);box-shadow:0 2px 30px rgba(0,0,0,.25)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;letter-spacing:.04em;color:var(--cream);text-decoration:none;display:flex;flex-direction:column;line-height:1.1}
+.nav-logo small{font-size:.58rem;letter-spacing:.2em;color:var(--gold2)}
+.nav-back{color:rgba(247,242,230,.7);font-size:.75rem;letter-spacing:.12em;text-decoration:none;border:1px solid rgba(196,154,48,.3);padding:.4rem 1rem;transition:all .3s}
+.nav-back:hover{color:var(--gold);border-color:rgba(196,154,48,.6)}
+
+/* PAGE HERO */
+.page-hero{margin-top:64px;background:linear-gradient(145deg,#0E2018,var(--forest));padding:4rem 4rem 3.5rem;text-align:center;position:relative;overflow:hidden}
+.page-hero::before{content:'RESERVATION';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:8rem;font-weight:300;color:rgba(255,255,255,.025);white-space:nowrap;letter-spacing:.3em;pointer-events:none}
+.page-hero-label{font-size:.65rem;letter-spacing:.3em;color:var(--gold);margin-bottom:.6rem}
+.page-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:300;color:var(--cream);letter-spacing:.04em}
+.page-hero p{font-size:.82rem;color:rgba(247,242,230,.5);margin-top:.8rem;font-weight:300;letter-spacing:.14em}
+
+/* STEP INDICATOR */
+.step-bar{display:flex;align-items:center;justify-content:center;gap:0;background:white;border-bottom:1px solid rgba(196,154,48,.15);padding:1.4rem 2rem;position:sticky;top:64px;z-index:50}
+.step-item{display:flex;align-items:center;gap:.6rem;cursor:default}
+.step-num{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(196,154,48,.3);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--muted);transition:all .4s}
+.step-label{font-size:.7rem;letter-spacing:.06em;color:var(--muted);transition:color .4s}
+.step-item.active .step-num{background:var(--forest);border-color:var(--forest);color:white}
+.step-item.active .step-label{color:var(--forest);font-weight:600}
+.step-item.done .step-num{background:var(--gold);border-color:var(--gold);color:var(--dark)}
+.step-item.done .step-num::after{content:'✓';font-size:.75rem}
+.step-item.done .step-num span{display:none}
+.step-item.done .step-label{color:var(--gold)}
+.step-connector{width:40px;height:1px;background:rgba(196,154,48,.25);margin:0 .8rem}
+@media(max-width:640px){.step-label{display:none}.step-connector{width:20px}}
+
+/* FORM CONTAINER */
+.form-wrap{max-width:960px;margin:0 auto;padding:4rem 2rem 6rem}
+.step-pane{display:none}
+.step-pane.active{display:block;animation:fadeIn .4s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION TITLES */
+.form-section-title{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;color:var(--forest);margin-bottom:.5rem}
+.form-section-sub{font-size:.82rem;color:var(--muted);font-weight:300;margin-bottom:2.5rem;line-height:1.8}
+
+/* ── STEP 1: PLAN CARDS ── */
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+@media(max-width:768px){.plan-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.plan-grid{grid-template-columns:1fr}}
+.plan-card{border:1.5px solid rgba(196,154,48,.2);background:white;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.plan-card:hover{border-color:rgba(196,154,48,.5);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.plan-card.selected{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold);background:#FFFDF5}
+.plan-card.selected::after{content:'✓ 選択中';position:absolute;top:0;right:0;background:var(--gold);color:var(--dark);font-size:.62rem;letter-spacing:.08em;padding:.25rem .7rem;font-weight:600}
+.plan-thumb{width:100%;height:110px;object-fit:cover;filter:brightness(.88) saturate(.9)}
+.plan-thumb-placeholder{width:100%;height:110px;display:flex;align-items:center;justify-content:center;font-size:1.8rem}
+.plan-card-body{padding:1rem 1.1rem 1.2rem}
+.plan-card-name{font-size:.9rem;color:var(--text);font-weight:400;margin-bottom:.25rem;letter-spacing:.04em}
+.plan-card-meta{font-size:.68rem;color:var(--gold);letter-spacing:.1em;margin-bottom:.6rem}
+.plan-card-price{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--forest);font-weight:300}
+.plan-card-price small{font-size:.65rem;font-family:'Noto Serif JP',serif;color:var(--muted);margin-left:.2rem}
+
+/* ── STEP 2: DATE & PARTICIPANTS ── */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+@media(max-width:640px){.form-row{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:.5rem}
+.form-group label{font-size:.72rem;letter-spacing:.12em;color:var(--forest);font-weight:600}
+.form-group input,.form-group select,.form-group textarea{
+  border:1px solid rgba(196,154,48,.3);background:white;padding:.85rem 1rem;
+  font-family:'Noto Serif JP',serif;font-size:.88rem;color:var(--text);
+  outline:none;transition:border-color .3s;appearance:none;width:100%;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(196,154,48,.12)}
+.form-group textarea{height:100px;resize:vertical}
+.form-note{font-size:.72rem;color:var(--muted);margin-top:.4rem;line-height:1.6}
+.form-note.warn{color:#8B4513}
+.count-control{display:flex;align-items:center;gap:0;border:1px solid rgba(196,154,48,.3);background:white;width:fit-content}
+.count-btn{width:42px;height:44px;background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--forest);transition:background .2s;display:flex;align-items:center;justify-content:center}
+.count-btn:hover{background:var(--cream2)}
+.count-val{padding:0 1.2rem;font-size:1.1rem;color:var(--text);min-width:50px;text-align:center;font-family:'Cormorant Garamond',serif}
+.time-options{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.time-opt{border:1px solid rgba(196,154,48,.25);padding:.75rem;text-align:center;cursor:pointer;transition:all .3s;background:white}
+.time-opt:hover{border-color:rgba(196,154,48,.5)}
+.time-opt.selected{border-color:var(--gold);background:#FFFDF5;color:var(--forest);font-weight:600}
+.time-opt-label{font-size:.78rem;letter-spacing:.06em}
+.time-opt-sub{font-size:.65rem;color:var(--muted);margin-top:.2rem}
+.skill-options{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:.5rem}
+.skill-opt{border:1px solid rgba(196,154,48,.2);padding:.8rem;cursor:pointer;transition:all .3s;background:white;text-align:center}
+.skill-opt.selected{border-color:var(--gold);background:#FFFDF5}
+.skill-opt span{font-size:.8rem;display:block}
+.skill-opt small{font-size:.65rem;color:var(--muted)}
+
+/* ── STEP 3: CONTACT INFO ── */
+.full-width{grid-column:1/-1}
+
+/* ── STEP 4: CONFIRMATION ── */
+.confirm-card{background:white;border:1px solid rgba(196,154,48,.2);padding:2.5rem}
+.confirm-row{display:flex;align-items:flex-start;padding:1rem 0;border-bottom:1px solid rgba(196,154,48,.1)}
+.confirm-row:last-child{border-bottom:none}
+.confirm-key{font-size:.7rem;letter-spacing:.14em;color:var(--gold);min-width:130px;padding-top:.1rem}
+.confirm-val{font-size:.92rem;color:var(--text);flex:1;line-height:1.7}
+.confirm-price-box{background:var(--forest);color:var(--cream);padding:1.5rem 2.5rem;text-align:center;margin:2rem 0}
+.confirm-price-label{font-size:.7rem;letter-spacing:.2em;opacity:.6;margin-bottom:.4rem}
+.confirm-price-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300}
+.confirm-price-note{font-size:.68rem;opacity:.5;margin-top:.3rem}
+.confirm-actions{display:flex;flex-direction:column;gap:1rem;margin-top:2.5rem}
+.btn-call{display:flex;align-items:center;justify-content:center;gap:.8rem;background:var(--forest);color:var(--cream);padding:1.2rem 2rem;text-decoration:none;font-size:.95rem;letter-spacing:.1em;font-weight:600;transition:background .3s}
+.btn-call:hover{background:#2D5240}
+.btn-call svg{flex-shrink:0}
+.btn-copy{display:flex;align-items:center;justify-content:center;gap:.8rem;border:1.5px solid var(--gold);color:var(--gold);padding:1rem 2rem;background:none;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.9rem;letter-spacing:.1em;width:100%;transition:background .3s}
+.btn-copy:hover{background:rgba(196,154,48,.08)}
+.btn-copy.copied{background:rgba(196,154,48,.12);color:var(--earth)}
+.confirm-note{background:var(--cream2);border-left:2px solid var(--gold);padding:1.2rem 1.5rem;font-size:.8rem;color:var(--muted);line-height:1.9;margin-top:1.5rem}
+
+/* NAVIGATION BUTTONS */
+.form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(196,154,48,.15)}
+.btn-prev{background:none;border:1px solid rgba(196,154,48,.3);color:var(--muted);padding:.8rem 1.8rem;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.82rem;letter-spacing:.1em;transition:all .3s}
+.btn-prev:hover{border-color:var(--gold);color:var(--text)}
+.btn-next{background:var(--gold);color:var(--dark);border:none;padding:.85rem 2.5rem;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.88rem;letter-spacing:.1em;font-weight:600;transition:background .3s}
+.btn-next:hover{background:var(--gold2)}
+.btn-next:disabled{background:#ccc;cursor:not-allowed}
+.step-count{font-size:.72rem;color:var(--muted);letter-spacing:.1em}
+
+/* ERROR MSG */
+.error-msg{background:#FFF5F5;border:1px solid #E88;color:#833;padding:.8rem 1rem;font-size:.8rem;margin-top:1rem;display:none}
+.error-msg.show{display:block}
+
+/* SELECTED PLAN SUMMARY BAR */
+.selected-bar{background:var(--cream2);border:1px solid rgba(196,154,48,.25);padding:1rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.selected-bar-info{font-size:.85rem;color:var(--text)}
+.selected-bar-info strong{color:var(--forest);font-weight:600}
+.selected-bar-price{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--gold);white-space:nowrap}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid rgba(196,154,48,.08);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between}
+.flogo{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:rgba(247,242,230,.4);font-style:italic}
+.fcopy{font-size:.65rem;color:rgba(247,242,230,.25);letter-spacing:.1em}
+
+/* FLOATING PHONE */
+.float-phone{position:fixed;bottom:2rem;right:2rem;z-index:200;display:flex;flex-direction:column;align-items:flex-end;gap:.5rem}
+.float-phone a{display:flex;align-items:center;gap:.6rem;background:var(--forest);color:var(--cream);padding:.75rem 1.3rem;text-decoration:none;font-size:.78rem;letter-spacing:.08em;box-shadow:0 6px 24px rgba(0,0,0,.25);transition:transform .3s}
+.float-phone a:hover{transform:translateY(-2px)}
+
+@media(max-width:768px){
+  nav{padding:.9rem 1.5rem}
+  .page-hero{padding:3rem 1.5rem 2.5rem}
+  .form-wrap{padding:2.5rem 1rem 4rem}
+  .step-bar{padding:1rem}
+  footer{flex-direction:column;gap:.5rem;text-align:center;padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    阿蘇うま牧場
+    <small>ASO UMA BOKUJO</small>
+  </a>
+  <a href="index.html" class="nav-back">← サイトへ戻る</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-label">RESERVATION</div>
+  <h1>ご予約フォーム</h1>
+  <p>乗馬体験のご予約内容をお選びください</p>
+</div>
+
+<!-- STEP BAR -->
+<div class="step-bar">
+  <div class="step-item active" id="si1"><div class="step-num"><span>1</span></div><div class="step-label">プラン選択</div></div>
+  <div class="step-connector"></div>
+  <div class="step-item" id="si2"><div class="step-num"><span>2</span></div><div class="step-label">日時・人数</div></div>
+  <div class="step-connector"></div>
+  <div class="step-item" id="si3"><div class="step-num"><span>3</span></div><div class="step-label">お客様情報</div></div>
+  <div class="step-connector"></div>
+  <div class="step-item" id="si4"><div class="step-num"><span>4</span></div><div class="step-label">確認・送信</div></div>
+</div>
+
+<div class="form-wrap">
+
+  <!-- ─────────── STEP 1: PLAN ─────────── -->
+  <div class="step-pane active" id="pane1">
+    <div class="form-section-title">乗馬プランをお選びください</div>
+    <div class="form-section-sub">プランをクリックして選択してください。詳細は<a href="aso-uma-bokujo.html#plans" style="color:var(--gold)">乗馬プラン一覧</a>でもご確認いただけます。</div>
+    <div class="plan-grid" id="planGrid"></div>
+    <div class="error-msg" id="err1">プランをお選びください。</div>
+    <div class="form-nav">
+      <div class="step-count">ステップ 1 / 4</div>
+      <button class="btn-next" onclick="goTo(2)">次へ：日時・人数 →</button>
+    </div>
+  </div>
+
+  <!-- ─────────── STEP 2: DATE & PARTICIPANTS ─────────── -->
+  <div class="step-pane" id="pane2">
+    <div id="selectedBar2" class="selected-bar" style="display:none">
+      <div class="selected-bar-info">選択中のプラン：<strong id="sbName2"></strong></div>
+      <div class="selected-bar-price" id="sbPrice2"></div>
+    </div>
+    <div class="form-section-title">日時と人数をお選びください</div>
+    <div class="form-section-sub">定休日（木曜）を除く10:00〜17:00の間でご希望の日時をご指定ください。</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>ご希望日 <span style="color:var(--err)">*</span></label>
+        <input type="date" id="resDate" min="">
+        <div class="form-note" id="dateNote"></div>
+      </div>
+      <div class="form-group">
+        <label>ご希望の時間帯</label>
+        <div class="time-options">
+          <div class="time-opt selected" onclick="selectTime(this,'午前（10:00-12:00）')">
+            <div class="time-opt-label">午前</div>
+            <div class="time-opt-sub">10:00〜12:00</div>
+          </div>
+          <div class="time-opt" onclick="selectTime(this,'午後（13:00-17:00）')">
+            <div class="time-opt-label">午後</div>
+            <div class="time-opt-sub">13:00〜17:00</div>
+          </div>
+          <div class="time-opt" onclick="selectTime(this,'ご相談')">
+            <div class="time-opt-label">ご相談</div>
+            <div class="time-opt-sub">要相談</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>参加人数 <span style="color:var(--err)">*</span></label>
+        <div class="count-control">
+          <button class="count-btn" onclick="changeCount(-1)">−</button>
+          <div class="count-val" id="countVal">1</div>
+          <button class="count-btn" onclick="changeCount(1)">＋</button>
+        </div>
+        <div class="form-note">お子様を含む総人数をご入力ください</div>
+      </div>
+      <div class="form-group">
+        <label>お子様の参加</label>
+        <select id="childrenSel">
+          <option value="なし">お子様の参加なし</option>
+          <option value="幼児あり">幼児（未就学児）あり</option>
+          <option value="小学生あり">小学生あり</option>
+          <option value="中学生以上あり">中学生以上あり</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:1.5rem">
+      <label>乗馬経験</label>
+      <div class="skill-options">
+        <div class="skill-opt selected" onclick="selectSkill(this,'初めて')"><span>🌱</span><span style="font-size:.82rem">初めて</span><small>乗馬未経験</small></div>
+        <div class="skill-opt" onclick="selectSkill(this,'数回経験')"><span>🐴</span><span style="font-size:.82rem">数回経験あり</span><small>体験乗馬程度</small></div>
+        <div class="skill-opt" onclick="selectSkill(this,'経験豊富')"><span>⭐</span><span style="font-size:.82rem">経験豊富</span><small>定期的に乗馬</small></div>
+      </div>
+    </div>
+
+    <div class="error-msg" id="err2">ご希望日をお選びください。木曜日は定休日です。</div>
+    <div class="form-nav">
+      <button class="btn-prev" onclick="goTo(1)">← 戻る</button>
+      <div class="step-count">ステップ 2 / 4</div>
+      <button class="btn-next" onclick="goTo(3)">次へ：お客様情報 →</button>
+    </div>
+  </div>
+
+  <!-- ─────────── STEP 3: CONTACT INFO ─────────── -->
+  <div class="step-pane" id="pane3">
+    <div id="selectedBar3" class="selected-bar" style="display:none">
+      <div class="selected-bar-info">選択中：<strong id="sbName3"></strong> — <span id="sbDate3" style="color:var(--muted)"></span></div>
+      <div class="selected-bar-price" id="sbPrice3"></div>
+    </div>
+    <div class="form-section-title">お客様情報をご入力ください</div>
+    <div class="form-section-sub">ご入力いただいた内容をもとに、牧場より折り返しご確認のご連絡をいたします。</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>お名前（フルネーム） <span style="color:var(--err)">*</span></label>
+        <input type="text" id="guestName" placeholder="山田 太郎">
+      </div>
+      <div class="form-group">
+        <label>お名前（カタカナ）</label>
+        <input type="text" id="guestNameKana" placeholder="ヤマダ タロウ">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>電話番号 <span style="color:var(--err)">*</span></label>
+        <input type="tel" id="guestPhone" placeholder="090-0000-0000">
+        <div class="form-note">当日連絡可能な番号をご入力ください</div>
+      </div>
+      <div class="form-group">
+        <label>メールアドレス</label>
+        <input type="email" id="guestEmail" placeholder="example@email.com">
+        <div class="form-note">任意。確認メールをご希望の場合にご入力ください</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>お住まいのご出発地</label>
+        <input type="text" id="guestFrom" placeholder="熊本市内、福岡市内 など">
+        <div class="form-note">アクセスのご案内にご利用します</div>
+      </div>
+      <div class="form-group">
+        <label>アレルギー・健康上の注意</label>
+        <input type="text" id="guestHealth" placeholder="馬アレルギー、腰痛 など">
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:1.5rem">
+      <label>ご要望・ご質問・備考</label>
+      <textarea id="guestNotes" placeholder="プランの詳細、服装のご相談、その他ご不明点などお気軽にどうぞ。"></textarea>
+    </div>
+
+    <div class="error-msg" id="err3">お名前と電話番号は必須項目です。</div>
+    <div class="form-nav">
+      <button class="btn-prev" onclick="goTo(2)">← 戻る</button>
+      <div class="step-count">ステップ 3 / 4</div>
+      <button class="btn-next" onclick="goTo(4)">確認画面へ →</button>
+    </div>
+  </div>
+
+  <!-- ─────────── STEP 4: CONFIRM ─────────── -->
+  <div class="step-pane" id="pane4">
+    <div class="form-section-title">予約内容のご確認</div>
+    <div class="form-section-sub">以下の内容でよろしければ、お電話またはテキストコピーにてご予約ください。</div>
+
+    <div class="confirm-card">
+      <div class="confirm-row"><div class="confirm-key">ご予約プラン</div><div class="confirm-val" id="c-plan">—</div></div>
+      <div class="confirm-row"><div class="confirm-key">料金（目安）</div><div class="confirm-val" id="c-price">—</div></div>
+      <div class="confirm-row"><div class="confirm-key">ご希望日</div><div class="confirm-val" id="c-date">—</div></div>
+      <div class="confirm-row"><div class="confirm-key">時間帯</div><div class="confirm-val" id="c-time">—</div></div>
+      <div class="confirm-row"><div class="confirm-key">参加人数</div><div class="confirm-val" id="c-count">—</div></div>
+      <div class="confirm-row"><div class="confirm-key">乗馬経験</div><div class="confirm-val" id="c-skill">—</div></div>
+      <div class="confirm-row"><div class="confirm-key">お子様</div><div class="confirm-val" id="c-children">—</div></div>
+      <div class="confirm-row"><div class="confirm-key">お名前</div><div class="confirm-val" id="c-name">—</div></div>
+      <div class="confirm-row"><div class="confirm-key">電話番号</div><div class="confirm-val" id="c-phone">—</div></div>
+      <div class="confirm-row"><div class="confirm-key">メール</div><div class="confirm-val" id="c-email">—</div></div>
+      <div class="confirm-row"><div class="confirm-key">ご要望</div><div class="confirm-val" id="c-notes" style="white-space:pre-wrap">—</div></div>
+    </div>
+
+    <div class="confirm-actions">
+      <a id="callBtn" href="tel:090-3987-1901" class="btn-call">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8C7.8 13.2 9.8 15.1 12.2 16.4L14.2 14.4C14.5 14.1 14.9 14 15.2 14.2C16.3 14.6 17.5 14.8 18.8 14.8C19.5 14.8 20 15.3 20 16V19C20 19.7 19.5 20 18.8 20C10.1 20 4 13.9 4 5.2C4 4.5 4.5 4 5.2 4H8.2C8.9 4 9.4 4.5 9.4 5.2C9.4 6.5 9.6 7.7 10 8.8C10.1 9.1 10 9.5 9.8 9.8L7.8 11.8" stroke="var(--gold2)" stroke-width="2" stroke-linecap="round"/></svg>
+        090-3987-1901 に電話して予約する
+      </a>
+      <button class="btn-copy" id="copyBtn" onclick="copyReservation()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="1" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a1 1 0 01-1-1V4a1 1 0 011-1h10a1 1 0 011 1v1" stroke="currentColor" stroke-width="2"/></svg>
+        予約内容をテキストでコピーする
+      </button>
+    </div>
+
+    <div class="confirm-note">
+      📌 ご予約は<strong>お電話（090-3987-1901）</strong>にてお願いしております。<br>
+      上記「内容をコピー」ボタンで予約テキストを手元にコピーし、お電話の際にご活用ください。<br>
+      営業時間：10:00〜17:00 / 木曜定休
+    </div>
+
+    <div class="form-nav" style="justify-content:flex-start">
+      <button class="btn-prev" onclick="goTo(3)">← 内容を修正する</button>
+    </div>
+  </div>
+
+</div><!-- /form-wrap -->
+
+<!-- FLOATING PHONE -->
+<div class="float-phone">
+  <a href="tel:090-3987-1901">📞 090-3987-1901</a>
+</div>
+
+<footer>
+  <div class="flogo">阿蘇うま牧場</div>
+  <div class="fcopy">〒869-2231 熊本県阿蘇市永草1290-1<br>© 2011 阿蘇うま牧場</div>
+</footer>
+
+<script>
+const PLANS = [
+  {id:'esayari',  name:'えさやり体験',          dur:'随時受付',   price:'¥100',    priceRaw:100,   img:'',    emoji:'🌾', bg:'linear-gradient(160deg,#3D2B0A,#7A5218)', note:'予約不要・直接来場OK', desc:'馬に直接えさを与えてふれあう'},
+  {id:'hikiuma',  name:'引き馬',                dur:'予約不要',   price:'¥1,100',  priceRaw:1100,  img:'http://aso-uma.com/wp-content/uploads/2013/04/hikiuma-01.jpg', emoji:'', note:'予約不要・直接来場OK', desc:'インストラクターが引く馬に乗る安心プラン'},
+  {id:'futari',   name:'幼児と保護者の二人乗り', dur:'要予約',     price:'¥1,500',  priceRaw:1500,  img:'',    bg:'linear-gradient(160deg,#1A2510,#2D4A1E,#0E1808)', emoji:'👶', note:'お子様連れにおすすめ', desc:'小さなお子様と保護者が一緒に乗馬'},
+  {id:'taiken20', name:'体験乗馬 20分コース',    dur:'約20分',    price:'¥3,500〜', priceRaw:3500, img:'',    bg:'linear-gradient(160deg,#0E1D2A,#1A3448,#0A1520)', emoji:'🎠', note:'要予約 · 乗馬デビューに', desc:'乗り方の説明後、場内で自分で操る'},
+  {id:'taiken40', name:'体験乗馬 40分コース',    dur:'約40分',    price:'¥5,940',  priceRaw:5940,  img:'',    bg:'linear-gradient(160deg,#1A2B14,#2E4820,#0E1C0A)', emoji:'🐎', note:'要予約 · 人気プラン', desc:'インストラクター先導後、自由に乗馬'},
+  {id:'mini',     name:'ミニ外乗コース',          dur:'約25分',    price:'¥5,500',  priceRaw:5500,  img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33051.jpg', emoji:'', note:'要予約 · 小学生以上', desc:'木立の中を馬に乗ってトレッキング'},
+  {id:'middle',   name:'外乗 ミドルコース',       dur:'約40分',    price:'¥7,700',  priceRaw:7700,  img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33074.jpg', emoji:'', note:'要予約 · 小学生以上 · 人気', desc:'森や木立の中を馬に乗ってトレッキング'},
+  {id:'long',     name:'外乗 ロングコース',       dur:'約60分',    price:'¥9,200',  priceRaw:9200,  img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33075.jpg', emoji:'', note:'要予約 · 小学生以上', desc:'森と野山を60分かけてゆっくり探索'},
+  {id:'advanced', name:'中・上級者 / アリーナレッスン', dur:'要相談', price:'要相談', priceRaw:0, img:'', bg:'linear-gradient(160deg,#0A1208,#182015,#0E1A10)', emoji:'⭐', note:'要予約 · 要相談', desc:'馬で走れるようになるためのレッスン'},
+];
+
+let selectedPlan = null;
+let selectedTime = '午前（10:00-12:00）';
+let selectedSkill = '初めて';
+let participantCount = 1;
+
+// Build plan grid
+const grid = document.getElementById('planGrid');
+PLANS.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'plan-card';
+  card.dataset.id = p.id;
+  const imgHtml = p.img
+    ? `<img class="plan-thumb" src="${p.img}" alt="${p.name}" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+    : '';
+  const bgStyle = p.bg || 'linear-gradient(145deg,#1E3A2F,#2D5240)';
+  const placeholder = p.img
+    ? `<div class="plan-thumb-placeholder" style="display:none;background:var(--cream2)">${p.emoji||'🐴'}</div>`
+    : `<div class="plan-thumb-placeholder" style="display:flex;${bgStyle};position:relative"><span style="font-size:2.5rem;z-index:1">${p.emoji||'🐴'}</span></div>`;
+  card.innerHTML = `${imgHtml}${placeholder}
+    <div class="plan-card-body">
+      <div class="plan-card-name">${p.name}</div>
+      <div class="plan-card-meta">${p.dur} · ${p.note}</div>
+      <div class="plan-card-price">${p.price}<small>${p.priceRaw>0?'（税込）':''}</small></div>
+    </div>`;
+  card.onclick = () => selectPlan(p.id);
+  grid.appendChild(card);
+});
+
+// Check URL param for pre-selected plan
+const urlP = new URLSearchParams(location.search).get('plan');
+if(urlP) { selectPlan(urlP); }
+
+function selectPlan(id) {
+  selectedPlan = PLANS.find(p => p.id === id);
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.toggle('selected', c.dataset.id === id));
+  document.getElementById('err1').classList.remove('show');
+}
+
+function selectTime(el, val) {
+  document.querySelectorAll('.time-opt').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTime = val;
+}
+
+function selectSkill(el, val) {
+  document.querySelectorAll('.skill-opt').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSkill = val;
+}
+
+function changeCount(delta) {
+  participantCount = Math.max(1, Math.min(10, participantCount + delta));
+  document.getElementById('countVal').textContent = participantCount;
+}
+
+// Set min date to tomorrow
+const dateIn = document.getElementById('resDate');
+const today = new Date();
+const tomorrow = new Date(today);
+tomorrow.setDate(today.getDate() + 1);
+dateIn.min = tomorrow.toISOString().split('T')[0];
+
+dateIn.addEventListener('change', () => {
+  const d = new Date(dateIn.value + 'T12:00:00');
+  const note = document.getElementById('dateNote');
+  if(d.getDay() === 4) { // Thursday
+    note.textContent = '⚠ 木曜日は定休日です。別の日をお選びください。';
+    note.className = 'form-note warn';
+  } else {
+    note.textContent = '';
+  }
+});
+
+function formatDate(val) {
+  if(!val) return '—';
+  const d = new Date(val + 'T12:00:00');
+  const days = ['日','月','火','水','木','金','土'];
+  return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${days[d.getDay()]}）`;
+}
+
+// Step navigation
+function goTo(step) {
+  if(step === 2) {
+    if(!selectedPlan) { document.getElementById('err1').classList.add('show'); return; }
+  }
+  if(step === 3) {
+    const d = new Date((dateIn.value||'') + 'T12:00:00');
+    if(!dateIn.value || d.getDay() === 4) {
+      document.getElementById('err2').classList.add('show'); return;
+    }
+    document.getElementById('err2').classList.remove('show');
+  }
+  if(step === 4) {
+    if(!document.getElementById('guestName').value.trim() || !document.getElementById('guestPhone').value.trim()) {
+      document.getElementById('err3').classList.add('show'); return;
+    }
+    document.getElementById('err3').classList.remove('show');
+    buildConfirm();
+  }
+
+  // Update selected-bar for step 2
+  if(step >= 2 && selectedPlan) {
+    document.getElementById('selectedBar2').style.display = 'flex';
+    document.getElementById('sbName2').textContent = selectedPlan.name;
+    document.getElementById('sbPrice2').textContent = selectedPlan.price;
+  }
+  // Selected bar for step 3
+  if(step >= 3 && selectedPlan) {
+    document.getElementById('selectedBar3').style.display = 'flex';
+    document.getElementById('sbName3').textContent = selectedPlan.name;
+    document.getElementById('sbDate3').textContent = formatDate(dateIn.value);
+    document.getElementById('sbPrice3').textContent = selectedPlan.price;
+  }
+
+  document.querySelectorAll('.step-pane').forEach((p,i) => p.classList.toggle('active', i+1 === step));
+  // Update step indicators
+  [1,2,3,4].forEach(n => {
+    const si = document.getElementById('si'+n);
+    si.classList.remove('active','done');
+    if(n < step) si.classList.add('done');
+    if(n === step) si.classList.add('active');
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function buildConfirm() {
+  const name = document.getElementById('guestName').value.trim();
+  const nameK = document.getElementById('guestNameKana').value.trim();
+  const phone = document.getElementById('guestPhone').value.trim();
+  const email = document.getElementById('guestEmail').value.trim();
+  const notes = document.getElementById('guestNotes').value.trim();
+  const health = document.getElementById('guestHealth').value.trim();
+  const from = document.getElementById('guestFrom').value.trim();
+  const children = document.getElementById('childrenSel').value;
+
+  document.getElementById('c-plan').textContent = selectedPlan.name;
+  document.getElementById('c-price').textContent = selectedPlan.price + (selectedPlan.priceRaw ? '（目安・税込）× ' + participantCount + '名' : '');
+  document.getElementById('c-date').textContent = formatDate(dateIn.value);
+  document.getElementById('c-time').textContent = selectedTime;
+  document.getElementById('c-count').textContent = participantCount + '名';
+  document.getElementById('c-skill').textContent = selectedSkill;
+  document.getElementById('c-children').textContent = children;
+  document.getElementById('c-name').textContent = name + (nameK ? '（' + nameK + '）' : '');
+  document.getElementById('c-phone').textContent = phone;
+  document.getElementById('c-email').textContent = email || '—';
+  document.getElementById('c-notes').textContent = [
+    notes ? '【ご要望】' + notes : '',
+    health ? '【健康上の注意】' + health : '',
+    from ? '【出発地】' + from : '',
+  ].filter(Boolean).join('\n') || '特になし';
+}
+
+function copyReservation() {
+  const name = document.getElementById('guestName').value.trim();
+  const phone = document.getElementById('guestPhone').value.trim();
+  const email = document.getElementById('guestEmail').value.trim();
+  const notes = document.getElementById('guestNotes').value.trim();
+  const health = document.getElementById('guestHealth').value.trim();
+  const from = document.getElementById('guestFrom').value.trim();
+  const children = document.getElementById('childrenSel').value;
+
+  const txt = `【阿蘇うま牧場 予約リクエスト】
+━━━━━━━━━━━━━━━━━━━
+◆ ご予約プラン：${selectedPlan.name}
+◆ 料金目安：${selectedPlan.price}${selectedPlan.priceRaw ? '（税込）× ' + participantCount + '名' : ''}
+◆ ご希望日：${formatDate(dateIn.value)}
+◆ 時間帯：${selectedTime}
+◆ 参加人数：${participantCount}名
+◆ お子様の参加：${children}
+◆ 乗馬経験：${selectedSkill}
+━━━━━━━━━━━━━━━━━━━
+◆ お名前：${name}
+◆ 電話番号：${phone}
+◆ メール：${email || '—'}
+${from ? '◆ 出発地：' + from : ''}
+${health ? '◆ 健康上の注意：' + health : ''}
+${notes ? '◆ ご要望：' + notes : ''}
+━━━━━━━━━━━━━━━━━━━
+電話番号：090-3987-1901
+営業時間：10:00〜17:00 / 木曜定休
+`;
+
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('copied');
+    btn.querySelector('svg').nextSibling.textContent = ' ✓ コピーしました！';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.querySelector('svg').nextSibling.textContent = ' 予約内容をテキストでコピーする';
+    }, 3000);
+  }).catch(() => alert('コピーできませんでした。手動でテキストを選択してコピーしてください。'));
+}
+</script>
+</body>
+</html>

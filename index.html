@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿蘇うま牧場 | 新・阿蘇名物「乗馬」</title>
+<meta name="description" content="熊本・阿蘇くじゅう国立公園内にたたずむアットホームな乗馬クラブ。初心者歓迎、外乗・ホースセラピーも。">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#1E3A2F;--forest2:#2D5240;--earth:#6B4226;
+  --gold:#C49A30;--gold2:#E8BE5A;--cream:#F7F2E6;--cream2:#EDE6D4;
+  --dark:#14100A;--muted:#8C7B65;--text:#2A1F14;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Serif JP',serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* ─── NAV ──────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.4rem 4rem;display:flex;align-items:center;justify-content:space-between;transition:background .5s,padding .4s}
+nav.scrolled{background:rgba(20,16,10,.96);padding:.9rem 4rem;backdrop-filter:blur(14px);box-shadow:0 2px 40px rgba(0,0,0,.3)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;letter-spacing:.04em;color:var(--cream);text-decoration:none;display:flex;flex-direction:column;line-height:1.1}
+.nav-logo small{font-size:.6rem;letter-spacing:.2em;font-weight:300;color:var(--gold2)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:rgba(247,242,230,.78);font-size:.77rem;letter-spacing:.14em;text-decoration:none;font-weight:300;transition:color .3s}
+.nav-links a:hover{color:var(--gold2)}
+.nav-cta{background:var(--gold);color:var(--dark);padding:.5rem 1.3rem;font-size:.74rem;letter-spacing:.1em;text-decoration:none;font-weight:600;transition:background .3s,transform .2s}
+.nav-cta:hover{background:var(--gold2);transform:translateY(-1px)}
+.nav-inquiry{border:1px solid rgba(196,154,48,.4);color:rgba(247,242,230,.75);padding:.48rem 1rem;font-size:.72rem;letter-spacing:.1em;text-decoration:none;font-weight:300;transition:all .3s;margin-right:.5rem}
+.nav-inquiry:hover{border-color:var(--gold);color:var(--gold2)}
+
+/* ─── FLOATING BAR ──────────────────────────────────── */
+.float-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(20,16,10,.97);backdrop-filter:blur(16px);border-top:1px solid rgba(196,154,48,.2);display:flex;align-items:stretch;transform:translateY(100%);transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.float-bar.visible{transform:translateY(0)}
+.fb-phone{display:flex;align-items:center;gap:.8rem;padding:1rem 2rem;color:var(--cream);text-decoration:none;border-right:1px solid rgba(196,154,48,.15);transition:background .3s;flex-shrink:0}
+.fb-phone:hover{background:rgba(196,154,48,.08)}
+.fb-phone-icon{font-size:1.1rem}
+.fb-phone-info{display:flex;flex-direction:column}
+.fb-phone-label{font-size:.58rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.1rem}
+.fb-phone-num{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--cream);letter-spacing:.04em}
+.fb-phone-sub{font-size:.6rem;color:rgba(247,242,230,.4);letter-spacing:.08em}
+.fb-links{display:flex;flex:1;align-items:stretch}
+.fb-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;flex:1;text-decoration:none;font-size:.8rem;letter-spacing:.1em;font-weight:600;transition:background .3s;padding:.8rem 1rem}
+.fb-btn-inquiry{color:rgba(247,242,230,.7);border-right:1px solid rgba(196,154,48,.12)}
+.fb-btn-inquiry:hover{background:rgba(247,242,230,.05);color:var(--cream)}
+.fb-btn-reserve{background:var(--gold);color:var(--dark)}
+.fb-btn-reserve:hover{background:var(--gold2)}
+@media(max-width:640px){
+  .fb-phone{padding:.8rem 1rem}
+  .fb-phone-num{font-size:1rem}
+  .float-bar{flex-wrap:wrap}
+  .fb-links{min-height:46px}
+  .fb-btn{font-size:.72rem}
+}
+
+/* ─── HERO ─────────────────────────────────────────── */
+#hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(.55) saturate(.85)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(14,32,20,.3) 0%,rgba(14,32,20,.1) 40%,rgba(14,32,20,.75) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:2rem;animation:fadeUp 1.3s cubic-bezier(.16,1,.3,1) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.hero-badge{display:inline-block;border:1px solid rgba(196,154,48,.6);color:var(--gold);padding:.38rem 1.3rem;font-size:.68rem;letter-spacing:.24em;margin-bottom:2.2rem;animation:fadeUp 1.3s .2s cubic-bezier(.16,1,.3,1) both}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,9.5vw,9rem);font-weight:300;color:var(--cream);line-height:.95;animation:fadeUp 1.3s .35s cubic-bezier(.16,1,.3,1) both;text-shadow:0 4px 40px rgba(0,0,0,.4)}
+.hero-title span{color:var(--gold2);font-style:italic}
+.hero-sub{font-weight:300;color:rgba(247,242,230,.7);font-size:clamp(.82rem,1.6vw,1.05rem);letter-spacing:.18em;margin-top:1.8rem;animation:fadeUp 1.3s .5s cubic-bezier(.16,1,.3,1) both}
+.hero-ctas{margin-top:2.8rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp 1.3s .65s cubic-bezier(.16,1,.3,1) both}
+.hero-btn-g{background:var(--gold);color:var(--dark);padding:.85rem 2.2rem;font-size:.82rem;letter-spacing:.12em;text-decoration:none;font-weight:600;transition:background .3s,transform .2s;display:inline-block}
+.hero-btn-g:hover{background:var(--gold2);transform:translateY(-2px)}
+.hero-btn-o{border:1.5px solid rgba(247,242,230,.5);color:var(--cream);padding:.85rem 2.2rem;font-size:.82rem;letter-spacing:.12em;text-decoration:none;font-weight:300;transition:background .3s;display:inline-block}
+.hero-btn-o:hover{background:rgba(247,242,230,.1)}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:rgba(247,242,230,.4);font-size:.62rem;letter-spacing:.2em;animation:fadeUp 1.3s 1s both}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,transparent,rgba(196,154,48,.55));animation:scrollAnim 2s ease-in-out infinite}
+@keyframes scrollAnim{0%{transform:scaleY(0) translateY(-100%);opacity:0}50%{opacity:1}100%{transform:scaleY(1) translateY(0);opacity:0}}
+
+/* ─── SHARED ────────────────────────────────────────── */
+section{padding:8rem 4rem}
+.wrap{max-width:1280px;margin:0 auto}
+.label{font-size:.63rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-family:'Cormorant Garamond',serif;margin-bottom:.7rem}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:300;line-height:1.15;color:var(--forest)}
+.stitle em{font-style:italic;color:var(--earth)}
+.divider{width:55px;height:1px;background:linear-gradient(to right,var(--gold),transparent);margin:1.6rem 0}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.15s}.d2{transition-delay:.3s}.d3{transition-delay:.45s}.d4{transition-delay:.6s}
+
+/* ─── ABOUT ─────────────────────────────────────────── */
+#about{background:var(--cream)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:center}
+.about-img-stack{position:relative}
+.about-img-main{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center top;display:block}
+.about-img-accent{position:absolute;bottom:-2.5rem;right:-2.5rem;width:55%;aspect-ratio:4/3;object-fit:cover;border:4px solid var(--cream);box-shadow:0 12px 50px rgba(0,0,0,.18)}
+.about-corner{position:absolute;top:-1.3rem;left:-1.3rem;width:100px;height:100px;border:1px solid var(--gold);opacity:.35;z-index:1}
+.about-num{position:absolute;bottom:-1rem;right:-1rem;font-family:'Cormorant Garamond',serif;font-size:7rem;font-weight:300;color:rgba(30,58,47,.06);line-height:1;user-select:none;z-index:-1}
+.about-text p{font-size:.95rem;line-height:2.1;color:var(--text);font-weight:300;letter-spacing:.04em;margin-bottom:1.3rem}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-top:2.5rem}
+.feat{background:var(--cream2);padding:1.1rem 1.3rem;border-left:2px solid var(--gold)}
+.feat h4{font-size:.72rem;letter-spacing:.14em;color:var(--gold);font-weight:600;margin-bottom:.3rem}
+.feat p{font-size:.8rem;color:var(--muted);line-height:1.7;margin:0}
+.sig{margin-top:2.5rem;display:flex;align-items:center;gap:1rem}
+.sig-line{width:28px;height:1px;background:var(--gold)}
+.sig span{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--earth)}
+
+/* ─── PHOTO STRIP ───────────────────────────────────── */
+#photostrip{padding:0;overflow:hidden;background:var(--dark)}
+.photostrip-track{display:flex;height:340px}
+.photostrip-track img{flex:1;min-width:0;object-fit:cover;filter:brightness(.8) saturate(.9);transition:flex .6s cubic-bezier(.16,1,.3,1),filter .4s}
+.photostrip-track img:hover{flex:2.5;filter:brightness(1) saturate(1)}
+
+/* ─── PLANS ─────────────────────────────────────────── */
+#plans{background:var(--forest);position:relative;overflow:hidden}
+#plans::before{content:'乗馬';position:absolute;right:-1rem;top:50%;transform:translateY(-50%);font-size:18rem;font-weight:700;color:rgba(255,255,255,.022);line-height:1;pointer-events:none;white-space:nowrap;font-family:'Noto Serif JP',serif}
+#plans .stitle{color:var(--cream)}
+#plans .label{color:var(--gold2)}
+#plans .divider{background:linear-gradient(to right,var(--gold2),transparent)}
+.plans-header-img{width:100%;height:280px;object-fit:cover;object-position:center 40%;margin-bottom:4rem;filter:brightness(.6) saturate(.8)}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin-top:4rem}
+.pcard{background:rgba(247,242,230,.04);border:1px solid rgba(196,154,48,.1);overflow:hidden;transition:background .4s,border-color .4s,transform .3s;position:relative;cursor:default}
+.pcard:hover{background:rgba(247,242,230,.08);border-color:rgba(196,154,48,.32);transform:translateY(-3px)}
+.pcard.hot{background:rgba(196,154,48,.09);border-color:rgba(196,154,48,.32)}
+.pcard.hot::before{content:'おすすめ';position:absolute;top:0;right:0;background:var(--gold);color:var(--dark);font-size:.63rem;letter-spacing:.1em;padding:.28rem .8rem;font-weight:600;z-index:2}
+.pcard-img{width:100%;height:170px;object-fit:cover;object-position:center;filter:brightness(.75) saturate(.85);transition:filter .4s,transform .5s}
+.pcard:hover .pcard-img{filter:brightness(.9) saturate(1);transform:scale(1.04)}
+.pcard-no-img{width:100%;height:170px;background:linear-gradient(145deg,rgba(247,242,230,.06),rgba(247,242,230,.02));display:flex;align-items:center;justify-content:center}
+.pcard-body{padding:2rem 1.8rem}
+.pname{font-size:1.02rem;color:var(--cream);letter-spacing:.06em;margin-bottom:.4rem}
+.pdur{font-size:.69rem;color:var(--gold);letter-spacing:.14em;margin-bottom:.9rem}
+.pdesc{font-size:.8rem;color:rgba(247,242,230,.55);line-height:1.9;font-weight:300;margin-bottom:1.5rem}
+.pprice{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--gold2);font-weight:300}
+.pprice small{font-size:.68rem;font-family:'Noto Serif JP',serif;color:rgba(247,242,230,.45);margin-left:.25rem}
+.pnote{font-size:.67rem;color:rgba(247,242,230,.3);margin-top:.35rem}
+.pcard-reserve{display:block;margin-top:1.4rem;background:rgba(196,154,48,.15);border:1px solid rgba(196,154,48,.3);color:var(--gold2);text-align:center;padding:.6rem 1rem;font-size:.72rem;letter-spacing:.12em;text-decoration:none;transition:all .3s}
+.pcard-reserve:hover{background:var(--gold);color:var(--dark);border-color:var(--gold)}
+
+/* ─── HORSES ─────────────────────────────────────────── */
+#horses{background:var(--cream2)}
+.horses-intro{max-width:600px}
+.horses-intro p{font-size:.92rem;color:var(--muted);line-height:2;font-weight:300;margin-top:1rem}
+.horses-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.5rem;margin-top:4rem}
+.hcard{background:var(--cream);overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,.07);transition:transform .4s,box-shadow .4s;display:grid;grid-template-columns:1fr 1fr}
+.hcard:hover{transform:translateY(-5px);box-shadow:0 14px 50px rgba(0,0,0,.13)}
+.hcard-imgs{display:flex;flex-direction:column;gap:2px}
+.hcard-img{width:100%;flex:1;object-fit:cover;min-height:0;filter:saturate(.9);transition:filter .4s}
+.hcard:hover .hcard-img{filter:saturate(1.1)}
+.hcard-img-solo{width:100%;height:100%;object-fit:cover;filter:saturate(.9);transition:filter .4s}
+.hcard:hover .hcard-img-solo{filter:saturate(1.1)}
+.hcard-info{padding:2rem 1.8rem;display:flex;flex-direction:column;justify-content:center}
+.hname{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--forest);margin-bottom:.15rem}
+.hbreed{font-size:.66rem;letter-spacing:.17em;color:var(--gold);margin-bottom:1rem}
+.hdesc{font-size:.82rem;color:var(--muted);line-height:1.85;margin-bottom:1.2rem}
+.htag{display:inline-block;background:var(--cream2);padding:.22rem .7rem;font-size:.63rem;letter-spacing:.1em;color:var(--earth)}
+
+/* ─── THERAPY ─────────────────────────────────────────── */
+#therapy{background:var(--dark);padding:0}
+.therapy-split{display:grid;grid-template-columns:1fr 1fr;min-height:620px}
+.therapy-img-side{position:relative;overflow:hidden}
+.therapy-img-side img{width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(.7)}
+.therapy-img-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(20,16,10,.3),transparent)}
+.therapy-img-text{position:absolute;bottom:3rem;left:3rem;right:3rem}
+.therapy-img-text .big-ja{font-family:'Cormorant Garamond',serif;font-size:5rem;font-style:italic;color:rgba(247,242,230,.12);line-height:1;pointer-events:none}
+.therapy-content{padding:6rem 5rem;display:flex;flex-direction:column;justify-content:center;background:var(--dark)}
+.therapy-content .stitle{color:var(--cream)}
+.therapy-content .label{color:var(--gold2)}
+.therapy-content .divider{background:linear-gradient(to right,var(--gold2),transparent)}
+.ther-p{font-size:.93rem;color:rgba(247,242,230,.62);line-height:2.2;font-weight:300;margin-bottom:1.1rem}
+.ther-badge{display:inline-block;margin-top:1.4rem;border:1px solid rgba(196,154,48,.38);padding:.75rem 1.5rem;color:var(--gold2);font-size:.72rem;letter-spacing:.12em;line-height:1.6}
+
+/* ─── GALLERY ─────────────────────────────────────────── */
+#gallery{padding:0;background:var(--forest)}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:260px;gap:3px}
+.gallery-item{overflow:hidden;position:relative}
+.gallery-item.tall{grid-row:span 2}
+.gallery-item.wide{grid-column:span 2}
+.gallery-item img{width:100%;height:100%;object-fit:cover;filter:brightness(.8) saturate(.9);transition:filter .5s,transform .5s}
+.gallery-item:hover img{filter:brightness(1) saturate(1.1);transform:scale(1.05)}
+.gallery-caption{position:absolute;bottom:0;left:0;right:0;padding:1.2rem 1.4rem;background:linear-gradient(transparent,rgba(14,32,20,.85));color:rgba(247,242,230,.9);font-size:.72rem;letter-spacing:.14em;opacity:0;transition:opacity .4s;font-weight:300}
+.gallery-item:hover .gallery-caption{opacity:1}
+
+/* ─── VOICES ─────────────────────────────────────────── */
+#voices{background:var(--cream);overflow:hidden}
+.voices-wrap{overflow:hidden;margin-top:3.5rem}
+.voices-track{display:flex;gap:1.8rem;animation:slide 34s linear infinite;width:max-content}
+.voices-track:hover{animation-play-state:paused}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.vcard{background:var(--cream2);width:330px;flex-shrink:0;padding:2rem;border-left:2px solid transparent;transition:border-color .3s}
+.vcard:hover{border-color:var(--gold)}
+.vstars{color:var(--gold);font-size:.88rem;margin-bottom:.9rem;letter-spacing:.08em}
+.vtext{font-size:.85rem;line-height:1.95;color:var(--text);font-weight:300;margin-bottom:1.4rem}
+.vauthor{font-size:.7rem;color:var(--muted);letter-spacing:.1em}
+.vauthor strong{color:var(--earth);font-weight:600;display:block}
+
+/* ─── ACCESS ─────────────────────────────────────────── */
+#access{background:var(--dark)}
+#access .stitle{color:var(--cream)}
+#access .label{color:var(--gold2)}
+#access .divider{background:linear-gradient(to right,var(--gold2),transparent)}
+.access-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;align-items:start}
+.aitem{margin-bottom:1.9rem;padding-bottom:1.9rem;border-bottom:1px solid rgba(196,154,48,.1)}
+.aitem:last-child{border-bottom:none}
+.aitem h4{font-size:.66rem;letter-spacing:.2em;color:var(--gold);margin-bottom:.55rem;font-weight:600}
+.aitem p{font-size:.86rem;line-height:1.9;color:rgba(247,242,230,.72);font-weight:300}
+.aphone{font-family:'Cormorant Garamond',serif;font-size:2.1rem;color:var(--gold2);font-weight:300}
+.atags{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.9rem}
+.atag{background:rgba(196,154,48,.1);border:1px solid rgba(196,154,48,.22);color:var(--gold);padding:.28rem .75rem;font-size:.67rem;letter-spacing:.09em}
+.amap{height:400px;border:1px solid rgba(196,154,48,.15);overflow:hidden;border-radius:2px}
+.amap iframe{width:100%;height:100%;border:none;filter:sepia(.35) saturate(.85) brightness(.85)}
+
+/* ─── CONTACT ─────────────────────────────────────────── */
+#contact{background:var(--dark);padding:8rem 4rem}
+.contact-in{max-width:700px;margin:0 auto;text-align:center}
+.contact-in .stitle{color:var(--cream)}
+.contact-in .label{color:var(--gold)}
+.contact-in .divider{margin:1.7rem auto}
+.contact-in p{color:rgba(247,242,230,.52);font-size:.88rem;line-height:2;font-weight:300;margin-bottom:2.8rem}
+.btns{display:flex;justify-content:center;gap:1.1rem;flex-wrap:wrap}
+.btn-g{background:var(--gold);color:var(--dark);padding:.95rem 2.5rem;font-weight:600;font-size:.83rem;letter-spacing:.12em;text-decoration:none;transition:background .3s,transform .2s;display:inline-block}
+.btn-g:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-o{border:1px solid rgba(196,154,48,.45);color:var(--gold);padding:.95rem 2.5rem;font-weight:300;font-size:.83rem;letter-spacing:.12em;text-decoration:none;transition:background .3s;display:inline-block}
+.btn-o:hover{background:rgba(196,154,48,.08)}
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+footer{background:var(--dark);border-top:1px solid rgba(196,154,48,.08);padding:2.3rem 4rem;display:flex;align-items:center;justify-content:space-between}
+.flogo{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:rgba(247,242,230,.4);font-style:italic}
+.fcopy{font-size:.67rem;color:rgba(247,242,230,.25);letter-spacing:.1em;text-align:right;line-height:1.8}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media(max-width:1024px){
+  nav{padding:1.1rem 2rem}
+  nav.scrolled{padding:.8rem 2rem}
+  .nav-links{display:none}
+  section{padding:6rem 2rem}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .about-img-accent{right:-1rem;bottom:-1.5rem}
+  .plans-grid{grid-template-columns:1fr 1fr}
+  .horses-grid{grid-template-columns:1fr}
+  .therapy-split{grid-template-columns:1fr}
+  .therapy-img-side{height:300px}
+  .therapy-content{padding:4rem 2.5rem}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:200px}
+  .gallery-item.wide{grid-column:span 1}
+  .access-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:.8rem;text-align:center}
+  .fcopy{text-align:center}
+}
+@media(max-width:640px){
+  .plans-grid{grid-template-columns:1fr}
+  .photostrip-track{height:200px}
+  .hcard{grid-template-columns:1fr;grid-template-rows:250px auto}
+  .hcard-imgs{flex-direction:row}
+  .gallery-grid{grid-template-columns:1fr;grid-auto-rows:220px}
+  .gallery-item.tall{grid-row:span 1}
+  .btns{flex-direction:column;align-items:center}
+  .btn-g,.btn-o{width:255px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    阿蘇うま牧場
+    <small>ASO UMA BOKUJO · EST. 2011</small>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">牧場について</a></li>
+    <li><a href="#plans">乗馬プラン</a></li>
+    <li><a href="#horses">馬の紹介</a></li>
+    <li><a href="#therapy">ホースセラピー</a></li>
+    <li><a href="#access">アクセス</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:.5rem">
+    <a href="aso-uma-inquiry.html" class="nav-inquiry">お問い合わせ</a>
+    <a href="aso-uma-reservation.html" class="nav-cta">予約する</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <img class="hero-img" src="http://aso-uma.com/wp-content/uploads/2013/04/top-slide02.jpg" 
+       alt="阿蘇うま牧場 — 家族と馬" referrerpolicy="no-referrer"
+       onerror="this.style.display='none';document.querySelector('.hero-fallback').style.display='block'">
+  <div class="hero-fallback" style="display:none;position:absolute;inset:0;background:linear-gradient(165deg,#0E2018,#1E3A2F 50%,#2D4A35)"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">熊本・阿蘇くじゅう国立公園</div>
+    <h1 class="hero-title">馬と<span>阿蘇</span>の<br>大地へ。</h1>
+    <p class="hero-sub">新・阿蘇名物「乗馬」 ── 初心者大歓迎のアットホームな乗馬クラブ</p>
+    <div class="hero-ctas">
+      <a href="#plans" class="hero-btn-g">乗馬プランを見る</a>
+      <a href="tel:090-3987-1901" class="hero-btn-o">📞 090-3987-1901</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>SCROLL</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap about-grid">
+    <!-- Images -->
+    <div class="about-img-stack reveal">
+      <div class="about-corner"></div>
+      <img class="about-img-main"
+           src="http://aso-uma.com/wp-content/uploads/2019/09/dan.jpg"
+           alt="オーナーのダン＆アイ" referrerpolicy="no-referrer"
+           onerror="this.style.background='linear-gradient(145deg,#1E3A2F,#2D5240)';this.removeAttribute('src')">
+      <img class="about-img-accent"
+           src="http://aso-uma.com/wp-content/uploads/2013/04/dan-family.jpg"
+           alt="開業時の家族写真" referrerpolicy="no-referrer"
+           onerror="this.style.display='none'">
+      <div class="about-num">11</div>
+    </div>
+    <!-- Text -->
+    <div>
+      <div class="label reveal">ABOUT US</div>
+      <h2 class="stitle reveal d1">手作りの温もりと、<br><em>雄大な阿蘇の自然。</em></h2>
+      <div class="divider reveal d2"></div>
+      <p class="reveal d2">乗馬は特別なスポーツだと思われがちですが、よりたくさんの方に馬とふれあう楽しさを知っていただきたい——そんな想いから、オーナーのダン＆アイご夫妻が国内外の乗馬クラブで経験を積み、2011年に自らの手で整地から始めて開いた牧場です。</p>
+      <p class="reveal d3">阿蘇くじゅう国立公園内に位置し、木漏れ日の中を馬と歩く外乗コースが特に人気。ウエスタン乗馬スタイルで、動きやすい服装とスニーカーがあれば、どなたでも気軽にお楽しみいただけます。</p>
+      <div class="features reveal d3">
+        <div class="feat"><h4>初心者歓迎</h4><p>インストラクターが丁寧に指導。乗馬が初めての方も安心です。</p></div>
+        <div class="feat"><h4>外乗（がいじょう）</h4><p>牧場の外、森や木立の中を馬に乗って散歩するコースが一番の魅力。</p></div>
+        <div class="feat"><h4>ホースセラピー</h4><p>こころの病気や引きこもりでお悩みの方への癒しのひとときも。</p></div>
+        <div class="feat"><h4>お子様から大人まで</h4><p>えさやり・引き馬など、幅広い年齢の方にお楽しみいただけます。</p></div>
+      </div>
+      <div class="sig reveal d4"><div class="sig-line"></div><span>Dan &amp; Ai — オーナー</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO STRIP -->
+<div id="photostrip">
+  <div class="photostrip-track">
+    <img src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33026.jpg" alt="フリッカー" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+    <img src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33051.jpg" alt="外乗コース" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+    <img src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33040.jpg" alt="モモ" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+    <img src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33074.jpg" alt="外乗ミドルコース" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+    <img src="http://aso-uma.com/wp-content/uploads/2013/04/top-slide01.png" alt="牧場の風景" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+  </div>
+</div>
+
+<!-- PLANS -->
+<section id="plans">
+  <div class="wrap">
+    <img class="plans-header-img reveal"
+         src="https://aso-uma.com/wp-content/uploads/2024/08/img_5593-1.jpg"
+         alt="乗馬プラン" referrerpolicy="no-referrer"
+         onerror="this.style.display='none'">
+    <div class="label reveal">RIDING PLANS</div>
+    <h2 class="stitle reveal d1">乗馬プラン</h2>
+    <div class="divider reveal d2"></div>
+    <p style="color:rgba(247,242,230,.52);font-size:.87rem;line-height:2;max-width:540px;font-weight:300" class="reveal d2">はじめての方から中・上級者まで、お楽しみに合わせてプランをお選びいただけます。予約優先ですので、お気軽にお電話にてご連絡ください。</p>
+
+    <div class="plans-grid">
+      <!-- えさやり -->
+      <div class="pcard reveal">
+        <div class="pcard-no-img" style="background:linear-gradient(160deg,#3D2B0A,#7A5218,#4A3210);position:relative;overflow:hidden">
+          <svg width="100%" height="100%" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <ellipse cx="150" cy="158" rx="160" ry="18" fill="rgba(100,70,20,.3)"/>
+            <path d="M 175 55 Q 200 44 218 54 Q 232 64 234 82 L 232 104 Q 229 120 218 126 L 204 130 Q 188 132 176 120 L 170 104 Q 165 86 170 70 Z" fill="rgba(139,90,43,.65)" stroke="rgba(196,154,48,.8)" stroke-width="2"/>
+            <path d="M 202 120 Q 214 124 218 120 Q 216 134 202 136 Q 190 134 188 122 Q 196 124 202 120Z" fill="rgba(80,50,20,.55)"/>
+            <circle cx="220" cy="76" r="5.5" fill="rgba(25,12,3,.85)"/><circle cx="221" cy="75" r="1.8" fill="rgba(255,255,255,.45)"/>
+            <path d="M 176 78 Q 158 84 150 100 L 146 132 Q 154 130 162 118 L 170 104" fill="rgba(139,90,43,.55)" stroke="rgba(196,154,48,.5)" stroke-width="1.5"/>
+            <path d="M 184 58 Q 173 66 166 80 Q 159 93 155 106" stroke="rgba(70,40,10,.8)" stroke-width="7" fill="none" stroke-linecap="round"/>
+            <ellipse cx="80" cy="150" rx="48" ry="12" fill="rgba(196,154,48,.2)"/>
+            <path d="M 38 150 Q 58 133 80 142 Q 102 133 122 150" stroke="rgba(196,154,48,.45)" stroke-width="1.5" fill="none"/>
+            <path d="M 44 146 Q 64 130 84 140 Q 104 130 118 146" stroke="rgba(196,154,48,.35)" stroke-width="1" fill="none"/>
+            <path d="M 52 142 Q 72 126 92 136" stroke="rgba(196,154,48,.3)" stroke-width="1" fill="none"/>
+            <path d="M 58 92 Q 74 82 96 86 Q 114 88 120 100 L 117 110 Q 100 108 84 106 Q 68 108 58 104 Z" fill="rgba(230,195,155,.45)" stroke="rgba(230,195,155,.3)" stroke-width="1"/>
+            <path d="M 72 88 L 68 76 M 84 85 L 81 74 M 96 86 L 95 75 M 108 88 L 108 77" stroke="rgba(230,195,155,.4)" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 88 77 L 96 63 M 91 77 L 102 61 M 94 77 L 108 63" stroke="rgba(196,154,48,.65)" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="140" cy="48" r="1.5" fill="rgba(196,154,48,.5)"/>
+            <circle cx="255" cy="38" r="1.2" fill="rgba(196,154,48,.4)"/>
+            <circle cx="28" cy="68" r="1" fill="rgba(196,154,48,.35)"/>
+          </svg>
+        </div>
+        <div class="pcard-body">
+          <div class="pname">えさやり体験</div>
+          <div class="pdur">随時受付 · 予約不要</div>
+          <div class="pdesc">馬に直接えさを与えてふれあう体験。お子様から年配の方まで楽しめます。</div>
+          <div class="pprice">¥100<small>税込</small></div>
+        </div>
+      </div>
+      <!-- 引き馬 -->
+      <div class="pcard reveal d1">
+        <img class="pcard-img" src="http://aso-uma.com/wp-content/uploads/2013/04/hikiuma-01.jpg" alt="引き馬" referrerpolicy="no-referrer" onerror="this.parentElement.querySelector('.pcard-img').style.display='none'">
+        <div class="pcard-body">
+          <div class="pname">引き馬</div>
+          <div class="pdur">予約不要 · 直接来場OK</div>
+          <div class="pdesc">インストラクターが引く馬に乗る安心プラン。小さなお子様からご年配の方まで。</div>
+          <div class="pprice">¥1,100<small>税込</small></div>
+          <a href="aso-uma-reservation.html?plan=hikiuma" class="pcard-reserve">このプランを予約する →</a>
+        </div>
+      </div>
+      <!-- 幼児 -->
+      <div class="pcard reveal d2">
+        <div class="pcard-no-img" style="background:linear-gradient(160deg,#1E2D1A,#2D4A24,#162210);position:relative;overflow:hidden">
+          <svg width="100%" height="100%" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <!-- Sky gradient -->
+            <rect width="300" height="100" fill="rgba(100,140,80,.12)"/>
+            <!-- Ground -->
+            <ellipse cx="150" cy="160" rx="170" ry="22" fill="rgba(50,80,30,.4)"/>
+            <!-- Horse body -->
+            <path d="M 60 130 Q 58 100 70 85 Q 85 68 120 65 Q 155 62 178 72 Q 200 82 205 100 L 203 130 Q 195 145 175 148 L 90 148 Q 68 145 60 130Z" fill="rgba(100,65,30,.6)" stroke="rgba(196,154,48,.6)" stroke-width="2"/>
+            <!-- Horse head/neck -->
+            <path d="M 178 72 Q 190 58 205 52 Q 218 46 228 54 Q 238 64 235 80 Q 232 96 220 105 L 205 110 Q 194 112 184 102 L 178 88 Z" fill="rgba(100,65,30,.65)" stroke="rgba(196,154,48,.6)" stroke-width="2"/>
+            <!-- Horse eye -->
+            <circle cx="224" cy="68" r="4" fill="rgba(20,10,3,.8)"/><circle cx="225" cy="67" r="1.2" fill="rgba(255,255,255,.4)"/>
+            <!-- Mane -->
+            <path d="M 185 56 Q 174 65 166 78 Q 160 90 156 106" stroke="rgba(60,35,10,.85)" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <!-- Tail -->
+            <path d="M 62 120 Q 40 112 32 125 Q 28 138 36 148 Q 44 155 55 148" stroke="rgba(60,35,10,.6)" stroke-width="4" fill="none"/>
+            <!-- Legs -->
+            <line x1="88" y1="148" x2="82" y2="168" stroke="rgba(100,65,30,.7)" stroke-width="7" stroke-linecap="round"/>
+            <line x1="110" y1="148" x2="106" y2="168" stroke="rgba(100,65,30,.7)" stroke-width="7" stroke-linecap="round"/>
+            <line x1="158" y1="148" x2="154" y2="168" stroke="rgba(100,65,30,.7)" stroke-width="7" stroke-linecap="round"/>
+            <line x1="178" y1="148" x2="176" y2="168" stroke="rgba(100,65,30,.7)" stroke-width="7" stroke-linecap="round"/>
+            <!-- Adult rider (larger) -->
+            <circle cx="128" cy="42" r="14" fill="rgba(230,195,155,.55)" stroke="rgba(196,154,48,.5)" stroke-width="1.5"/>
+            <path d="M 114 56 Q 110 70 112 85 Q 118 80 128 78 Q 138 80 144 85 Q 146 70 142 56" fill="rgba(50,100,60,.6)" stroke="rgba(50,100,60,.4)" stroke-width="1"/>
+            <!-- Child rider (smaller, in front) -->
+            <circle cx="150" cy="52" r="10" fill="rgba(255,220,180,.55)" stroke="rgba(196,154,48,.4)" stroke-width="1.2"/>
+            <path d="M 141 62 Q 138 74 140 82 Q 146 78 152 76 Q 158 78 162 82 Q 164 74 161 62" fill="rgba(200,100,50,.5)" stroke="rgba(200,100,50,.3)" stroke-width="1"/>
+            <!-- Helmet on child -->
+            <path d="M 142 50 Q 142 40 152 38 Q 162 40 162 50" fill="rgba(80,120,80,.6)" stroke="rgba(80,120,80,.4)" stroke-width="1"/>
+            <!-- Stars/sparkles -->
+            <circle cx="40" cy="30" r="1.5" fill="rgba(196,154,48,.5)"/>
+            <circle cx="270" cy="25" r="1.2" fill="rgba(196,154,48,.45)"/>
+            <circle cx="260" cy="50" r="1" fill="rgba(196,154,48,.35)"/>
+          </svg>
+        </div>
+        <div class="pcard-body">
+          <div class="pname">幼児と保護者の二人乗り</div>
+          <div class="pdur">要予約</div>
+          <div class="pdesc">小さなお子様と保護者が一緒に馬に乗れる特別プラン。</div>
+          <div class="pprice">¥1,500<small>税込</small></div>
+          <a href="aso-uma-reservation.html?plan=futari" class="pcard-reserve">このプランを予約する →</a>
+        </div>
+      </div>
+      <!-- 体験20 -->
+      <div class="pcard reveal">
+        <div class="pcard-no-img" style="background:linear-gradient(160deg,#0E1D2A,#1A3448,#0A1520);position:relative;overflow:hidden">
+          <svg width="100%" height="100%" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <!-- Arena fence posts -->
+            <line x1="20" y1="80" x2="20" y2="155" stroke="rgba(196,154,48,.35)" stroke-width="3"/>
+            <line x1="60" y1="80" x2="60" y2="155" stroke="rgba(196,154,48,.35)" stroke-width="3"/>
+            <line x1="100" y1="82" x2="100" y2="155" stroke="rgba(196,154,48,.35)" stroke-width="3"/>
+            <line x1="20" y1="95" x2="100" y2="95" stroke="rgba(196,154,48,.3)" stroke-width="2"/>
+            <line x1="20" y1="115" x2="100" y2="115" stroke="rgba(196,154,48,.25)" stroke-width="2"/>
+            <!-- Ground -->
+            <ellipse cx="180" cy="158" rx="140" ry="18" fill="rgba(80,60,30,.4)"/>
+            <!-- Horse body walking -->
+            <path d="M 120 115 Q 118 90 130 78 Q 145 64 175 62 Q 205 60 222 72 Q 238 84 236 105 L 232 128 Q 224 142 204 144 L 145 144 Q 126 140 120 125Z" fill="rgba(90,55,25,.65)" stroke="rgba(196,154,48,.65)" stroke-width="2"/>
+            <!-- Horse head -->
+            <path d="M 222 72 Q 235 60 248 56 Q 260 52 268 62 Q 274 74 270 90 Q 265 104 252 110 L 238 114 Q 226 114 218 104 L 215 88 Z" fill="rgba(90,55,25,.7)" stroke="rgba(196,154,48,.65)" stroke-width="2"/>
+            <circle cx="264" cy="70" r="4.5" fill="rgba(20,10,3,.8)"/><circle cx="265" cy="69" r="1.4" fill="rgba(255,255,255,.4)"/>
+            <!-- Mane -->
+            <path d="M 228 62 Q 218 72 210 85 Q 204 96 200 110" stroke="rgba(55,30,10,.9)" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <!-- Legs walking pose -->
+            <path d="M 138 144 L 130 168" stroke="rgba(90,55,25,.8)" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 158 144 L 155 168" stroke="rgba(90,55,25,.8)" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 195 144 L 196 168" stroke="rgba(90,55,25,.8)" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 215 143 Q 218 155 212 168" stroke="rgba(90,55,25,.8)" stroke-width="7" stroke-linecap="round"/>
+            <!-- Rider on horse -->
+            <circle cx="178" cy="42" r="12" fill="rgba(230,195,155,.6)" stroke="rgba(196,154,48,.5)" stroke-width="1.5"/>
+            <!-- Helmet -->
+            <path d="M 167 40 Q 167 30 178 28 Q 189 30 189 40" fill="rgba(60,90,60,.7)" stroke="rgba(60,90,60,.5)" stroke-width="1"/>
+            <!-- Body on horse -->
+            <path d="M 167 54 Q 162 68 164 82 L 178 78 L 192 82 Q 194 68 189 54" fill="rgba(40,80,120,.6)" stroke="rgba(40,80,120,.4)" stroke-width="1"/>
+            <!-- Reins -->
+            <path d="M 178 66 Q 200 70 215 85 Q 225 94 245 85" stroke="rgba(196,154,48,.5)" stroke-width="1.5" fill="none"/>
+            <!-- Cone markers in arena -->
+            <polygon points="45,140 40,155 50,155" fill="rgba(200,80,50,.6)"/>
+            <polygon points="80,138 75,153 85,153" fill="rgba(200,80,50,.5)"/>
+          </svg>
+        </div>
+        <div class="pcard-body">
+          <div class="pname">体験乗馬 20分コース</div>
+          <div class="pdur">約20分 · 要予約</div>
+          <div class="pdesc">乗り方の説明後、場内を自分で馬を操る楽しさを体験。乗馬デビューに最適。</div>
+          <div class="pprice">¥3,500<small>税込〜</small></div>
+          <a href="aso-uma-reservation.html?plan=taiken20" class="pcard-reserve">このプランを予約する →</a>
+        </div>
+      </div>
+      <!-- 体験40 HOT -->
+      <div class="pcard hot reveal d1">
+        <div class="pcard-no-img" style="background:linear-gradient(160deg,#1A2B14,#2E4820,#0E1C0A);position:relative;overflow:hidden">
+          <svg width="100%" height="100%" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <!-- Sky with clouds -->
+            <path d="M 0 0 L 300 0 L 300 80 Q 250 70 200 75 Q 150 80 100 72 Q 50 65 0 70 Z" fill="rgba(100,150,200,.1)"/>
+            <!-- Distant mountains -->
+            <path d="M 0 90 Q 40 55 80 70 Q 120 50 160 65 Q 200 45 240 62 Q 270 55 300 68 L 300 110 L 0 110Z" fill="rgba(50,80,40,.35)"/>
+            <!-- Meadow ground -->
+            <ellipse cx="150" cy="158" rx="175" ry="22" fill="rgba(60,100,40,.5)"/>
+            <path d="M 0 135 Q 75 125 150 130 Q 225 125 300 135 L 300 170 L 0 170Z" fill="rgba(40,75,25,.5)"/>
+            <!-- Grass details -->
+            <path d="M 20 140 L 18 128 M 40 138 L 38 126 M 60 136 L 58 124" stroke="rgba(80,130,50,.5)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 240 138 L 238 126 M 260 140 L 258 128 M 280 136 L 278 124" stroke="rgba(80,130,50,.5)" stroke-width="2" stroke-linecap="round"/>
+            <!-- Horse trotting in field -->
+            <path d="M 105 110 Q 102 85 115 70 Q 130 55 162 52 Q 194 50 212 62 Q 228 74 226 96 L 222 120 Q 214 136 195 138 L 130 138 Q 110 133 105 118Z" fill="rgba(85,50,22,.7)" stroke="rgba(196,154,48,.7)" stroke-width="2"/>
+            <!-- Horse head up (alert pose) -->
+            <path d="M 212 62 Q 222 46 236 40 Q 250 34 260 44 Q 268 56 264 74 Q 259 90 246 96 L 232 100 Q 220 100 212 90 L 208 74 Z" fill="rgba(85,50,22,.72)" stroke="rgba(196,154,48,.7)" stroke-width="2"/>
+            <circle cx="256" cy="54" r="5" fill="rgba(20,10,3,.8)"/><circle cx="257" cy="53" r="1.6" fill="rgba(255,255,255,.45)"/>
+            <!-- Flowing mane -->
+            <path d="M 222 44 Q 210 56 202 72 Q 196 84 192 100" stroke="rgba(55,28,8,.9)" stroke-width="7" fill="none" stroke-linecap="round"/>
+            <!-- Flowing tail -->
+            <path d="M 108 118 Q 84 108 72 122 Q 66 136 76 148 Q 86 156 100 148 Q 92 140 95 130 Q 100 120 108 118" fill="rgba(55,28,8,.55)" stroke="rgba(55,28,8,.4)" stroke-width="1"/>
+            <!-- Legs trotting (diagonal pair lifted) -->
+            <path d="M 128 138 L 118 165" stroke="rgba(85,50,22,.8)" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 148 138 Q 152 152 148 165" stroke="rgba(85,50,22,.8)" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 186 138 Q 192 152 195 165" stroke="rgba(85,50,22,.8)" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 207 136 L 210 162" stroke="rgba(85,50,22,.8)" stroke-width="7" stroke-linecap="round"/>
+            <!-- Rider relaxed posture -->
+            <circle cx="162" cy="35" r="13" fill="rgba(235,200,160,.6)" stroke="rgba(196,154,48,.5)" stroke-width="1.5"/>
+            <path d="M 150 46 Q 145 60 148 76 L 162 72 L 176 76 Q 179 60 174 46" fill="rgba(120,70,40,.6)" stroke="rgba(120,70,40,.4)" stroke-width="1"/>
+            <path d="M 152 44 Q 148 44 148 48 Q 148 52 162 50 Q 176 52 176 48 Q 176 44 172 44 Q 162 42 152 44Z" fill="rgba(50,80,50,.7)"/>
+            <!-- Reins loose -->
+            <path d="M 162 60 Q 184 65 205 78 Q 220 88 248 76" stroke="rgba(196,154,48,.45)" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="pcard-body">
+          <div class="pname">体験乗馬 40分コース</div>
+          <div class="pdur">約40分 · 要予約</div>
+          <div class="pdesc">インストラクターの先導後、馬場内で自由に乗馬。ゆったりと馬との時間を満喫できる人気プラン。</div>
+          <div class="pprice">¥5,940<small>税込</small></div>
+          <a href="aso-uma-reservation.html?plan=taiken40" class="pcard-reserve">このプランを予約する →</a>
+        </div>
+      </div>
+      <!-- ミニ外乗 HOT -->
+      <div class="pcard hot reveal d2">
+        <img class="pcard-img" src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33051.jpg" alt="ミニ外乗コース" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+        <div class="pcard-body">
+          <div class="pname">ミニ外乗コース</div>
+          <div class="pdur">約25分 · 要予約 · 小学生以上</div>
+          <div class="pdesc">牧場の外へ。木立の中を馬に乗ってトレッキング。3名様まで同時に。</div>
+          <div class="pprice">¥5,500<small>税込</small></div>
+          <a href="aso-uma-reservation.html?plan=mini" class="pcard-reserve">このプランを予約する →</a>
+        </div>
+      </div>
+      <!-- ミドル -->
+      <div class="pcard hot reveal">
+        <img class="pcard-img" src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33074.jpg" alt="外乗ミドルコース" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+        <div class="pcard-body">
+          <div class="pname">外乗 ミドルコース</div>
+          <div class="pdur">約40分 · 要予約 · 小学生以上</div>
+          <div class="pdesc">森や木立の中を40分かけてトレッキング。阿蘇の自然を五感で感じる人気コースです。</div>
+          <div class="pprice">¥7,700<small>税込</small></div>
+          <a href="aso-uma-reservation.html?plan=middle" class="pcard-reserve">このプランを予約する →</a>
+        </div>
+      </div>
+      <!-- ロング -->
+      <div class="pcard reveal d1">
+        <img class="pcard-img" src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33075.jpg" alt="外乗ロングコース" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+        <div class="pcard-body">
+          <div class="pname">外乗 ロングコース</div>
+          <div class="pdur">約60分 · 要予約 · 小学生以上</div>
+          <div class="pdesc">森と野山を60分かけてゆっくり探索。馬との深い一体感を堪能できる最長コース。</div>
+          <div class="pprice">¥9,200<small>税込</small></div>
+          <a href="aso-uma-reservation.html?plan=long" class="pcard-reserve">このプランを予約する →</a>
+        </div>
+      </div>
+      <!-- 上級 -->
+      <div class="pcard reveal d2">
+        <div class="pcard-no-img" style="background:linear-gradient(160deg,#0A1208,#182015,#0E1A10);position:relative;overflow:hidden">
+          <svg width="100%" height="100%" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <!-- Night/dusk atmosphere -->
+            <circle cx="260" cy="25" r="14" fill="rgba(196,154,48,.12)"/>
+            <circle cx="260" cy="25" r="10" fill="rgba(196,154,48,.08)"/>
+            <!-- Stars -->
+            <circle cx="30" cy="20" r="1.5" fill="rgba(196,154,48,.6)"/>
+            <circle cx="80" cy="15" r="1" fill="rgba(196,154,48,.5)"/>
+            <circle cx="140" cy="10" r="1.2" fill="rgba(196,154,48,.55)"/>
+            <circle cx="200" cy="18" r="1" fill="rgba(196,154,48,.45)"/>
+            <circle cx="55" cy="40" r="0.8" fill="rgba(196,154,48,.4)"/>
+            <!-- Ground -->
+            <path d="M 0 140 Q 75 130 150 135 Q 225 130 300 140 L 300 170 L 0 170Z" fill="rgba(40,65,30,.6)"/>
+            <!-- Galloping horse silhouette - dynamic pose -->
+            <path d="M 80 95 Q 75 70 92 55 Q 112 38 148 36 Q 184 34 205 50 Q 222 64 218 88 L 212 112 Q 200 130 178 132 L 110 132 Q 85 126 80 108Z" fill="rgba(15,20,12,.85)" stroke="rgba(196,154,48,.75)" stroke-width="2.5"/>
+            <!-- Head up, forward -->
+            <path d="M 205 50 Q 218 34 234 26 Q 250 18 260 30 Q 268 44 262 62 Q 255 78 240 83 L 224 86 Q 210 84 205 72 L 202 56 Z" fill="rgba(15,20,12,.88)" stroke="rgba(196,154,48,.75)" stroke-width="2.5"/>
+            <circle cx="254" cy="40" r="5.5" fill="rgba(196,154,48,.6)"/>
+            <circle cx="256" cy="39" r="2" fill="rgba(255,255,200,.5)"/>
+            <!-- Mane flowing back (speed) -->
+            <path d="M 220 30 Q 235 40 242 55 Q 248 68 248 82" stroke="rgba(30,20,5,.9)" stroke-width="7" fill="none" stroke-linecap="round"/>
+            <path d="M 215 32 Q 228 44 234 60" stroke="rgba(50,35,10,.6)" stroke-width="4" fill="none"/>
+            <!-- Tail streaming behind (gallop) -->
+            <path d="M 82 105 Q 50 90 30 100 Q 12 112 18 130 Q 28 140 48 130" stroke="rgba(30,20,5,.75)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <!-- Galloping legs (all four spread) -->
+            <path d="M 100 132 L 80 155" stroke="rgba(15,20,12,.9)" stroke-width="8" stroke-linecap="round"/>
+            <path d="M 125 132 Q 128 148 122 162" stroke="rgba(15,20,12,.9)" stroke-width="8" stroke-linecap="round"/>
+            <path d="M 175 132 Q 180 148 185 162" stroke="rgba(15,20,12,.9)" stroke-width="8" stroke-linecap="round"/>
+            <path d="M 200 128 L 220 148" stroke="rgba(15,20,12,.9)" stroke-width="8" stroke-linecap="round"/>
+            <!-- Expert rider - forward lean -->
+            <circle cx="152" cy="22" r="13" fill="rgba(196,154,48,.5)" stroke="rgba(196,154,48,.6)" stroke-width="1.5"/>
+            <!-- Helmet -->
+            <path d="M 141 20 Q 141 10 152 8 Q 163 10 163 20" fill="rgba(30,50,30,.85)" stroke="rgba(80,100,80,.5)" stroke-width="1"/>
+            <!-- Rider body (forward lean for speed) -->
+            <path d="M 142 34 Q 132 48 134 62 L 148 58 L 162 62 Q 168 48 162 34" fill="rgba(20,60,100,.7)" stroke="rgba(20,60,100,.4)" stroke-width="1"/>
+            <!-- Reins taut -->
+            <path d="M 150 46 Q 172 52 194 65 Q 210 76 244 62" stroke="rgba(196,154,48,.6)" stroke-width="2" fill="none"/>
+            <!-- Speed lines -->
+            <line x1="20" y1="80" x2="55" y2="82" stroke="rgba(196,154,48,.25)" stroke-width="1.5"/>
+            <line x1="15" y1="95" x2="55" y2="96" stroke="rgba(196,154,48,.2)" stroke-width="1"/>
+            <line x1="22" y1="110" x2="58" y2="110" stroke="rgba(196,154,48,.18)" stroke-width="1"/>
+            <!-- Star badge -->
+            <polygon points="265,130 267,136 273,136 268,140 270,146 265,142 260,146 262,140 257,136 263,136" fill="rgba(196,154,48,.65)"/>
+          </svg>
+        </div>
+        <div class="pcard-body">
+          <div class="pname">中・上級者 / アリーナレッスン</div>
+          <div class="pdur">要相談・要予約</div>
+          <div class="pdesc">馬で走れるようになるためのレッスン。本格的に乗馬技術を磨きたい方へ。</div>
+          <div class="pprice">お問い合わせ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HORSES -->
+<section id="horses">
+  <div class="wrap">
+    <div class="horses-intro">
+      <div class="label reveal">OUR HORSES</div>
+      <h2 class="stitle reveal d1">牧場の馬たち</h2>
+      <div class="divider reveal d2"></div>
+      <p class="reveal d2">個性豊かな4頭が、阿蘇うま牧場でみなさんをお待ちしています。</p>
+    </div>
+    <div class="horses-grid">
+      <!-- Flicker -->
+      <div class="hcard reveal">
+        <div class="hcard-imgs">
+          <img class="hcard-img" src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33026.jpg" alt="フリッカー" referrerpolicy="no-referrer" onerror="this.parentElement.style.background='linear-gradient(145deg,#2D1A0E,#4A2A14)'">
+          <img class="hcard-img" src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33028.jpg" alt="フリッカー2" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+        </div>
+        <div class="hcard-info">
+          <div class="hname">Flicker</div>
+          <div class="hbreed">フリッカー · クォーターホース · 2009年生</div>
+          <div class="hdesc">少しだけ男顔だけど、とてもおとなしい女の子。人懐っこくて首などを掻いてあげると寄り添ってきます。外乗コースで一番人気の馬で、木漏れ日の中をゆったりと歩む姿がとても美しい。</div>
+          <span class="htag">外乗コース担当</span>
+        </div>
+      </div>
+      <!-- Momo -->
+      <div class="hcard reveal d1">
+        <div class="hcard-imgs">
+          <img class="hcard-img" src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33040.jpg" alt="モモ" referrerpolicy="no-referrer" onerror="this.parentElement.style.background='linear-gradient(145deg,#1E0E18,#3A1830)'">
+          <img class="hcard-img" src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33047.jpg" alt="モモ2" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+        </div>
+        <div class="hcard-info">
+          <div class="hname">Momo</div>
+          <div class="hbreed">モモ · 2014年生</div>
+          <div class="hdesc">とても顔の可愛らしい女の子。気難しいところもありますが、ゆったり歩いてくれるので乗り心地が良く、多くのお客様の心をつかんでいます。</div>
+          <span class="htag">外乗 / ホースセラピー</span>
+        </div>
+      </div>
+      <!-- Choco & Merry SVG cards -->
+      <div class="hcard reveal">
+        <div style="background:linear-gradient(160deg,#2A1505,#5C2E10,#3A1C08);position:relative;overflow:hidden;height:100%">
+          <svg width="100%" height="100%" viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <!-- Background warmth -->
+            <rect width="280" height="340" fill="url(#chocoGrad)"/>
+            <defs><radialGradient id="chocoGrad" cx="50%" cy="40%"><stop offset="0%" stop-color="rgba(180,100,30,.2)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient></defs>
+            <!-- Horse body - full portrait -->
+            <path d="M 55 300 L 52 230 Q 48 200 44 175 Q 36 140 50 112 Q 66 84 100 76 L 132 72 Q 165 68 182 86 L 196 108 Q 210 133 208 165 L 204 210 Q 200 245 190 268 L 186 300" fill="rgba(139,70,25,.75)" stroke="rgba(196,154,48,.7)" stroke-width="2.5"/>
+            <!-- Chest detail -->
+            <path d="M 100 76 Q 90 62 85 50 Q 80 36 90 26 Q 100 16 110 20 Q 116 28 112 42 Q 108 58 102 76" fill="rgba(139,70,25,.7)" stroke="rgba(196,154,48,.65)" stroke-width="2"/>
+            <!-- Horse neck and head -->
+            <path d="M 182 86 Q 200 68 218 58 Q 236 48 250 58 Q 262 70 260 90 Q 256 112 240 122 L 222 130 Q 206 132 196 120 L 188 100 Z" fill="rgba(145,75,28,.78)" stroke="rgba(196,154,48,.72)" stroke-width="2.5"/>
+            <!-- Nose/muzzle detail -->
+            <path d="M 238 118 Q 252 124 256 118 Q 254 134 240 138 Q 226 136 222 122 Q 230 126 238 118Z" fill="rgba(100,50,15,.7)" stroke="rgba(196,154,48,.4)" stroke-width="1"/>
+            <!-- Nostril -->
+            <ellipse cx="242" cy="128" rx="4" ry="3" fill="rgba(60,25,8,.8)"/>
+            <ellipse cx="250" cy="126" rx="3.5" ry="2.5" fill="rgba(60,25,8,.8)"/>
+            <!-- Eye - warm and kind (Choco's personality) -->
+            <circle cx="250" cy="80" r="12" fill="rgba(40,20,5,.85)"/>
+            <circle cx="250" cy="80" r="9" fill="rgba(80,45,15,.9)"/>
+            <circle cx="250" cy="80" r="6" fill="rgba(20,10,3,.95)"/>
+            <circle cx="253" cy="77" r="2.5" fill="rgba(255,255,255,.5)"/>
+            <!-- Long eyelashes (gentle look) -->
+            <path d="M 242 72 L 238 66 M 246 70 L 244 64 M 252 69 L 252 63 M 258 71 L 262 66 M 261 76 L 267 74" stroke="rgba(60,30,8,.8)" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Mane - full and flowing -->
+            <path d="M 204 64 Q 190 76 180 94 Q 172 110 168 130 Q 164 150 162 170" stroke="rgba(80,38,10,.9)" stroke-width="10" fill="none" stroke-linecap="round"/>
+            <path d="M 208 60 Q 194 74 184 92 Q 176 108 172 128" stroke="rgba(60,28,6,.7)" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <path d="M 212 58 Q 200 72 192 90" stroke="rgba(100,50,15,.5)" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <!-- Forehead star/blaze marking (Choco has white marking) -->
+            <path d="M 230 60 Q 234 50 238 46 Q 242 50 240 62 Q 236 70 232 68 Q 228 64 230 60Z" fill="rgba(220,200,170,.35)"/>
+            <!-- Tail -->
+            <path d="M 56 250 Q 28 236 16 252 Q 6 270 18 288 Q 30 302 50 290 Q 38 278 42 264 Q 48 252 56 250" fill="rgba(80,38,10,.6)" stroke="rgba(80,38,10,.4)" stroke-width="1"/>
+            <!-- Ground -->
+            <ellipse cx="130" cy="318" rx="140" ry="18" fill="rgba(100,65,20,.4)"/>
+          </svg>
+        </div>
+        <div class="hcard-info">
+          <div class="hname">Choco</div>
+          <div class="hbreed">チョコ</div>
+          <div class="hdesc">チョコレート色の美しい毛並みが印象的。おっとりとした性格で子どもたちに大人気。えさやり体験や引き馬でも活躍しています。</div>
+          <span class="htag">子ども・初心者向け</span>
+        </div>
+      </div>
+      <div class="hcard reveal d1">
+        <div style="background:linear-gradient(160deg,#0A1E14,#144A2C,#082010);position:relative;overflow:hidden;height:100%">
+          <svg width="100%" height="100%" viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <defs><radialGradient id="merryGrad" cx="50%" cy="35%"><stop offset="0%" stop-color="rgba(100,200,140,.15)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient></defs>
+            <rect width="280" height="340" fill="url(#merryGrad)"/>
+            <!-- Flower accents (Merry is the mood-maker) -->
+            <circle cx="30" cy="40" r="6" fill="rgba(196,154,48,.2)"/>
+            <circle cx="30" cy="40" r="3" fill="rgba(196,154,48,.3)"/>
+            <circle cx="250" cy="30" r="5" fill="rgba(196,154,48,.18)"/>
+            <!-- Horse body - lighter colored -->
+            <path d="M 55 300 L 52 228 Q 48 196 44 170 Q 36 135 50 106 Q 68 78 104 70 L 138 66 Q 172 62 190 80 L 206 104 Q 220 132 218 166 L 212 212 Q 208 248 196 272 L 192 300" fill="rgba(180,160,130,.65)" stroke="rgba(220,200,160,.7)" stroke-width="2.5"/>
+            <!-- Neck + head -->
+            <path d="M 190 80 Q 206 62 224 52 Q 242 42 256 52 Q 268 64 265 86 Q 260 108 244 118 L 226 126 Q 210 128 200 116 L 194 98 Z" fill="rgba(185,165,135,.7)" stroke="rgba(220,200,160,.7)" stroke-width="2.5"/>
+            <!-- Muzzle -->
+            <path d="M 242 114 Q 256 120 260 114 Q 258 130 244 134 Q 230 132 226 118 Q 234 122 242 114Z" fill="rgba(160,140,110,.65)" stroke="rgba(220,200,160,.4)" stroke-width="1"/>
+            <ellipse cx="246" cy="126" rx="4" ry="3" fill="rgba(100,80,55,.7)"/>
+            <ellipse cx="254" cy="124" rx="3.5" ry="2.5" fill="rgba(100,80,55,.7)"/>
+            <!-- Eye - bright and happy (Merry personality) -->
+            <circle cx="253" cy="74" r="13" fill="rgba(40,55,30,.85)"/>
+            <circle cx="253" cy="74" r="10" fill="rgba(70,90,50,.9)"/>
+            <circle cx="253" cy="74" r="7" fill="rgba(20,30,12,.95)"/>
+            <circle cx="257" cy="70" r="3" fill="rgba(255,255,255,.55)"/>
+            <circle cx="250" cy="78" r="1.5" fill="rgba(255,255,255,.25)"/>
+            <!-- Eyelashes -->
+            <path d="M 244 66 L 240 60 M 249 64 L 247 58 M 255 63 L 256 57 M 261 66 L 265 61" stroke="rgba(80,60,30,.8)" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Mane - lighter, flowing -->
+            <path d="M 206 58 Q 192 72 183 90 Q 174 108 170 130 Q 166 152 164 174" stroke="rgba(200,175,130,.7)" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <path d="M 210 54 Q 196 70 187 88 Q 178 106 174 128" stroke="rgba(220,195,150,.5)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M 214 52 Q 202 68 195 86" stroke="rgba(240,215,170,.35)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- Merry's signature: slightly playful ear -->
+            <path d="M 228 52 L 222 32 Q 230 26 238 32 L 236 52" fill="rgba(185,165,135,.65)" stroke="rgba(220,200,160,.6)" stroke-width="1.5"/>
+            <path d="M 230 50 L 226 36 Q 231 30 236 36 L 235 50" fill="rgba(160,130,100,.5)"/>
+            <!-- Chest blaze (Merry has white chest) -->
+            <path d="M 115 70 Q 125 58 132 56 Q 136 64 132 76 Q 128 84 120 80 Q 114 76 115 70Z" fill="rgba(240,230,210,.3)"/>
+            <!-- Tail - lighter, flowing -->
+            <path d="M 56 248 Q 28 232 16 250 Q 6 268 18 286 Q 30 300 52 288 Q 38 276 42 262 Q 48 250 56 248" fill="rgba(200,178,140,.55)" stroke="rgba(200,178,140,.4)" stroke-width="1"/>
+            <!-- Ground -->
+            <ellipse cx="130" cy="318" rx="142" ry="18" fill="rgba(50,90,45,.45)"/>
+            <!-- Small flowers on ground -->
+            <circle cx="60" cy="310" r="3" fill="rgba(196,154,48,.3)"/>
+            <circle cx="200" cy="315" r="3" fill="rgba(196,154,48,.25)"/>
+            <circle cx="170" cy="308" r="2.5" fill="rgba(196,154,48,.3)"/>
+          </svg>
+        </div>
+        <div class="hcard-info">
+          <div class="hname">Merry</div>
+          <div class="hbreed">メリー</div>
+          <div class="hdesc">牧場のムードメーカー。しっかり調教されており安定感抜群。ホースセラピーでの貢献が大きく、訪れた方の心を癒しています。</div>
+          <span class="htag">ホースセラピー担当</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THERAPY -->
+<section id="therapy" style="padding:0">
+  <div class="therapy-split">
+    <div class="therapy-img-side">
+      <img src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33047.jpg"
+           alt="ホースセラピー" referrerpolicy="no-referrer"
+           style="width:100%;height:100%;object-fit:cover;filter:brightness(.45) saturate(.7)"
+           onerror="this.style.background='linear-gradient(145deg,#0E1A10,#1E3A2F)'">
+      <div class="therapy-img-overlay"></div>
+      <div class="therapy-img-text">
+        <div class="big-ja" style="font-family:'Cormorant Garamond',serif;font-size:5rem;font-style:italic;color:rgba(247,242,230,.1);line-height:1">癒</div>
+      </div>
+    </div>
+    <div class="therapy-content">
+      <div class="label reveal">HORSE THERAPY</div>
+      <h2 class="stitle reveal d1" style="color:var(--cream)">馬が、<br><em style="color:var(--gold2)">心を癒す。</em></h2>
+      <div class="divider reveal d2"></div>
+      <p class="ther-p reveal d2">引きこもりやこころの病気でお悩みの方への「ホースセラピー」も行っています。馬のぬくもりに触れることで、言葉では届かない深いところから癒しが生まれます。</p>
+      <p class="ther-p reveal d3">阿蘇うま牧場のオーナーは、九州では数少ない<strong style="color:var(--gold2);font-weight:400">スペシャルオリンピックス日本の認定トレーナー</strong>でもあります。知的発達障害のある方が馬を通じてスポーツに取り組めるよう、専門的なサポートも行っています。</p>
+      <div class="ther-badge reveal d4">スペシャルオリンピックス日本<br>認定トレーナー在籍</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div id="gallery">
+  <div class="gallery-grid">
+    <div class="gallery-item tall">
+      <img src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33026.jpg" alt="フリッカー" referrerpolicy="no-referrer" onerror="this.parentElement.style.background='#1E3A2F'">
+      <div class="gallery-caption">フリッカー — クォーターホース</div>
+    </div>
+    <div class="gallery-item">
+      <img src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33051.jpg" alt="ミニ外乗" referrerpolicy="no-referrer" onerror="this.parentElement.style.background='#2D1A0E'">
+      <div class="gallery-caption">ミニ外乗コース（約25分）</div>
+    </div>
+    <div class="gallery-item">
+      <img src="http://aso-uma.com/wp-content/uploads/2013/04/hikiuma-01.jpg" alt="引き馬" referrerpolicy="no-referrer" onerror="this.parentElement.style.background='#1A3020'">
+      <div class="gallery-caption">引き馬 — 小さなお子様も安心</div>
+    </div>
+    <div class="gallery-item wide">
+      <img src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33074.jpg" alt="外乗ミドル" referrerpolicy="no-referrer" onerror="this.parentElement.style.background='#1E3A2F'">
+      <div class="gallery-caption">外乗ミドルコース — 森の中をトレッキング</div>
+    </div>
+    <div class="gallery-item">
+      <img src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33075.jpg" alt="外乗ロング" referrerpolicy="no-referrer" onerror="this.parentElement.style.background='#2D1A0E'">
+      <div class="gallery-caption">外乗ロングコース（約60分）</div>
+    </div>
+    <div class="gallery-item">
+      <img src="http://aso-uma.com/wp-content/uploads/2019/09/5D_33040.jpg" alt="モモ" referrerpolicy="no-referrer" onerror="this.parentElement.style.background='#1A3020'">
+      <div class="gallery-caption">モモ — 2014年生まれ</div>
+    </div>
+    <div class="gallery-item">
+      <img src="http://aso-uma.com/wp-content/uploads/2013/04/dan-family.jpg" alt="オーナー家族" referrerpolicy="no-referrer" onerror="this.parentElement.style.background='#1E3A2F'">
+      <div class="gallery-caption">オーナーご夫妻と家族</div>
+    </div>
+  </div>
+</div>
+
+<!-- VOICES -->
+<section id="voices">
+  <div class="wrap">
+    <div class="label reveal">GUEST REVIEWS</div>
+    <h2 class="stitle reveal d1">お客様の声</h2>
+    <div class="divider reveal d2"></div>
+  </div>
+  <div class="voices-wrap">
+    <div class="voices-track" id="vtrack">
+      <div class="vcard"><div class="vstars">★★★★★</div><p class="vtext">広大な阿蘇の景色をバックに、かわいいお馬さんが出迎えてくれました。ご夫婦で経営されていて、初心者の私たちにも阿蘇の魅力を色々と教えてくださいました。あっという間の30分でしたが、本当に貴重な体験ができました。</p><div class="vauthor"><strong>カップル・ご夫婦</strong>じゃらんnet</div></div>
+      <div class="vcard"><div class="vstars">★★★★★</div><p class="vtext">外乗40分コース、木漏れ日の美しい林の中を回る最高の体験でした。乗せてくれたのはフリッカーちゃん。馬の背中から見えた視界に気分は爽快！翌日ちょうど気持ちいいくらいの筋肉痛になりました（笑）</p><div class="vauthor"><strong>道の駅阿蘇スタッフ</strong>体験レポート</div></div>
+      <div class="vcard"><div class="vstars">★★★★★</div><p class="vtext">夫婦で初めての乗馬でした。最初に説明があって安心してトライできました。馬に乗ってパカパカと山道を歩き出した瞬間、子供のように無邪気に喜んでしまいました。やさしいオーナーさんに大満足です！</p><div class="vauthor"><strong>ご夫婦</strong>じゃらんnet</div></div>
+      <div class="vcard"><div class="vstars">★★★★★</div><p class="vtext">平日に行ったからか人もほとんど居らず、子どもが走り回っても安心でした。馬が途中で草を食べたり凸凹道を歩いたり自由でしたが、それはそれで楽しい思い出になりました！また絶対来ます。</p><div class="vauthor"><strong>ファミリー</strong>じゃらんnet</div></div>
+      <div class="vcard"><div class="vstars">★★★★★</div><p class="vtext">ホースセラピーでお世話になりました。馬のぬくもりと、オーナーのダンさんの丁寧な対応に心から感謝しています。馬と過ごす時間が、日常ではなかなか得られない深い安らぎをもたらしてくれました。</p><div class="vauthor"><strong>ホースセラピー体験者</strong></div></div>
+      <div class="vcard"><div class="vstars">★★★★★</div><p class="vtext">10年ぶりの乗馬でしたが、インストラクターの方が親切に指導してくださり安心でした。阿蘇の自然の中、普段より高い目線から見える景色が圧巻。一歩進むたびの馬の振動が心地よく、まるで別世界でした。</p><div class="vauthor"><strong>リピーター</strong>アソビュー</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section id="access">
+  <div class="wrap access-grid">
+    <div>
+      <div class="label reveal">ACCESS & INFO</div>
+      <h2 class="stitle reveal d1">アクセス</h2>
+      <div class="divider reveal d2"></div>
+      <div class="aitem reveal d2">
+        <h4>住所</h4>
+        <p>〒869-2231<br>熊本県阿蘇市永草1290-1</p>
+      </div>
+      <div class="aitem reveal d3">
+        <h4>お電話</h4>
+        <div class="aphone">090-3987-1901</div>
+      </div>
+      <div class="aitem reveal d3">
+        <h4>営業時間・定休日</h4>
+        <p>10:00 〜 17:00<br>木曜日 定休</p>
+      </div>
+      <div class="aitem reveal d4">
+        <h4>交通アクセス</h4>
+        <p>熊本I.C.より車で約50分<br>熊本空港より車で約45分<br>JR豊肥本線・市ノ川駅より大分方面へ車で約5分</p>
+        <div class="atags">
+          <span class="atag">予約優先</span>
+          <span class="atag">現金のみ</span>
+          <span class="atag">駐車場あり</span>
+        </div>
+      </div>
+      <div class="aitem reveal d4">
+        <h4>持ち物</h4>
+        <p>動きやすい服装（長ズボン）<br>スニーカー等の運動靴<br>クレジットカード不可・現金のみ</p>
+      </div>
+    </div>
+    <div class="amap reveal d2">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2000!2d131.0233998!3d32.9301646!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x354120bcba3ee37d%3A0xc4408efd482f20f!2z6Zi_6JiH44GG44G-54mn5aC0!5e0!3m2!1sja!2sjp!4v1699000000000" allowfullscreen loading="lazy" title="阿蘇うま牧場"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-in">
+    <div class="label reveal">CONTACT & RESERVATION</div>
+    <h2 class="stitle reveal d1">ご予約・お問い合わせ</h2>
+    <div class="divider reveal d2"></div>
+    <p class="reveal d2">乗馬体験は予約優先です。天気予報をご確認の上、<br>ご予定が決まりましたらお早めにお電話にてご連絡ください。</p>
+    <div class="btns reveal d3">
+      <a href="aso-uma-reservation.html" class="btn-g">📋 プランを選んで予約する</a>
+      <a href="aso-uma-inquiry.html" class="btn-o">💬 AIに質問・お問い合わせ</a>
+    </div>
+  </div>
+</section>
+
+<!-- FLOATING RESERVATION BAR -->
+<div class="float-bar" id="floatBar">
+  <a class="fb-phone" href="tel:090-3987-1901">
+    <div class="fb-phone-icon">📞</div>
+    <div class="fb-phone-info">
+      <span class="fb-phone-label">お電話でのご予約</span>
+      <span class="fb-phone-num">090-3987-1901</span>
+      <span class="fb-phone-sub">10:00〜17:00 / 木曜定休</span>
+    </div>
+  </a>
+  <div class="fb-links">
+    <a class="fb-btn fb-btn-inquiry" href="aso-uma-inquiry.html">💬 AIに質問・お問い合わせ</a>
+    <a class="fb-btn fb-btn-reserve" href="aso-uma-reservation.html">📋 プランを選んで予約する</a>
+  </div>
+</div>
+
+<footer>
+  <div class="flogo">阿蘇うま牧場</div>
+  <div class="fcopy">
+    〒869-2231 熊本県阿蘇市永草1290-1 · Tel: 090-3987-1901<br>
+    © 2011 阿蘇うま牧場 All Rights Reserved.
+  </div>
+</footer>
+
+<script>
+// NAV
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), {passive:true});
+
+// Floating bar — show after scrolling past hero
+const floatBar = document.getElementById('floatBar');
+window.addEventListener('scroll', () => {
+  floatBar.classList.toggle('visible', scrollY > window.innerHeight * 0.6);
+}, {passive:true});
+
+// Reveal on scroll
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+}), {threshold:.1, rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Voice track loop
+const vt = document.getElementById('vtrack');
+vt.innerHTML += vt.innerHTML;
+
+// Photo strip — filter out images that fail to load (remove empty slots)
+document.querySelectorAll('.photostrip-track img').forEach(img => {
+  img.addEventListener('error', () => img.remove());
+});
+</script>
+</body>
+</html>

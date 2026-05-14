@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ・AI案内 | 阿蘇うま牧場</title>
+<meta name="description" content="阿蘇うま牧場へのお問い合わせ・AIアシスタントページです。">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#1E3A2F;--earth:#6B4226;
+  --gold:#C49A30;--gold2:#E8BE5A;--cream:#F7F2E6;--cream2:#EDE6D4;
+  --dark:#14100A;--muted:#8C7B65;--text:#2A1F14;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Serif JP',serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(20,16,10,.96);padding:.9rem 4rem;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(14px);box-shadow:0 2px 30px rgba(0,0,0,.25)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;letter-spacing:.04em;color:var(--cream);text-decoration:none;display:flex;flex-direction:column;line-height:1.1}
+.nav-logo small{font-size:.58rem;letter-spacing:.2em;color:var(--gold2)}
+.nav-links-r{display:flex;gap:.8rem;align-items:center}
+.nav-link-r{color:rgba(247,242,230,.65);font-size:.73rem;letter-spacing:.1em;text-decoration:none;border:1px solid rgba(196,154,48,.25);padding:.38rem .9rem;transition:all .3s}
+.nav-link-r:hover{color:var(--gold);border-color:rgba(196,154,48,.5)}
+.nav-link-r.primary{background:var(--gold);color:var(--dark);border-color:var(--gold);font-weight:600}
+.nav-link-r.primary:hover{background:var(--gold2);border-color:var(--gold2)}
+
+/* PAGE HERO */
+.page-hero{margin-top:64px;background:linear-gradient(145deg,#0E2018,var(--forest));padding:4rem 4rem 3.5rem;text-align:center;position:relative;overflow:hidden}
+.page-hero::before{content:'INQUIRY';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:8rem;font-weight:300;color:rgba(255,255,255,.025);white-space:nowrap;letter-spacing:.3em;pointer-events:none}
+.page-hero-label{font-size:.65rem;letter-spacing:.3em;color:var(--gold);margin-bottom:.6rem}
+.page-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:300;color:var(--cream);letter-spacing:.04em}
+.page-hero p{font-size:.82rem;color:rgba(247,242,230,.5);margin-top:.8rem;font-weight:300;letter-spacing:.1em}
+
+/* QUICK CONTACT STRIP */
+.quick-strip{background:var(--dark);display:grid;grid-template-columns:repeat(3,1fr)}
+.qitem{padding:1.8rem 2rem;border-right:1px solid rgba(196,154,48,.1);text-align:center;text-decoration:none;transition:background .3s}
+.qitem:last-child{border-right:none}
+.qitem:hover{background:rgba(196,154,48,.06)}
+.qitem-icon{font-size:1.5rem;margin-bottom:.5rem}
+.qitem-label{font-size:.65rem;letter-spacing:.18em;color:var(--gold);margin-bottom:.3rem;display:block}
+.qitem-val{font-size:.92rem;color:var(--cream);font-weight:300;letter-spacing:.06em}
+.qitem-sub{font-size:.65rem;color:rgba(247,242,230,.35);margin-top:.2rem}
+@media(max-width:640px){.quick-strip{grid-template-columns:1fr}.qitem{border-right:none;border-bottom:1px solid rgba(196,154,48,.1)}}
+
+/* SECTIONS */
+section{padding:6rem 4rem}
+.wrap{max-width:1100px;margin:0 auto}
+.label{font-size:.63rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-family:'Cormorant Garamond',serif;margin-bottom:.7rem}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:300;line-height:1.15;color:var(--forest)}
+.divider{width:55px;height:1px;background:linear-gradient(to right,var(--gold),transparent);margin:1.4rem 0}
+
+/* ── AI CHAT ── */
+#ai-chat{background:var(--forest);padding:5rem 4rem}
+#ai-chat .stitle{color:var(--cream)}
+#ai-chat .label{color:var(--gold2)}
+#ai-chat .divider{background:linear-gradient(to right,var(--gold2),transparent)}
+.chat-layout{display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:start;margin-top:3rem}
+.chat-info p{font-size:.88rem;color:rgba(247,242,230,.6);line-height:2;font-weight:300;margin-bottom:1.2rem}
+.chat-info .quick-q{margin-top:1.5rem}
+.chat-info .quick-q-label{font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.8rem}
+.qbtn{display:block;width:100%;background:rgba(247,242,230,.05);border:1px solid rgba(196,154,48,.18);color:rgba(247,242,230,.75);padding:.65rem 1rem;font-family:'Noto Serif JP',serif;font-size:.77rem;text-align:left;cursor:pointer;margin-bottom:.5rem;transition:all .3s;letter-spacing:.04em}
+.qbtn:hover{background:rgba(196,154,48,.1);border-color:rgba(196,154,48,.4);color:var(--cream)}
+/* Chat window */
+.chat-window{background:rgba(247,242,230,.05);border:1px solid rgba(196,154,48,.15);display:flex;flex-direction:column;height:520px}
+.chat-messages{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;scroll-behavior:smooth}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-track{background:rgba(0,0,0,.1)}
+.chat-messages::-webkit-scrollbar-thumb{background:rgba(196,154,48,.3);border-radius:2px}
+.msg{max-width:80%;line-height:1.7;font-size:.85rem;padding:.9rem 1.1rem;border-radius:2px;position:relative;animation:msgIn .3s ease both}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.bot{background:rgba(247,242,230,.1);color:rgba(247,242,230,.9);align-self:flex-start;border-left:2px solid var(--gold)}
+.msg.user{background:var(--gold);color:var(--dark);align-self:flex-end;font-weight:500}
+.msg.typing{background:rgba(247,242,230,.06);color:rgba(247,242,230,.5);align-self:flex-start;font-style:italic;font-size:.78rem}
+.chat-input-row{border-top:1px solid rgba(196,154,48,.15);padding:1rem 1.2rem;display:flex;gap:.8rem;background:rgba(0,0,0,.15)}
+.chat-input{flex:1;background:rgba(247,242,230,.08);border:1px solid rgba(196,154,48,.2);color:var(--cream);padding:.7rem 1rem;font-family:'Noto Serif JP',serif;font-size:.85rem;outline:none;transition:border-color .3s}
+.chat-input::placeholder{color:rgba(247,242,230,.3)}
+.chat-input:focus{border-color:rgba(196,154,48,.5)}
+.chat-send{background:var(--gold);color:var(--dark);border:none;padding:.7rem 1.3rem;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.82rem;font-weight:600;letter-spacing:.06em;transition:background .3s;flex-shrink:0}
+.chat-send:hover{background:var(--gold2)}
+.chat-send:disabled{background:#888;cursor:not-allowed}
+.api-error{background:rgba(139,26,26,.2);border:1px solid rgba(200,60,60,.3);color:rgba(255,180,180,.9);padding:.8rem 1rem;font-size:.8rem;margin:.5rem 1.2rem;display:none}
+
+@media(max-width:900px){.chat-layout{grid-template-columns:1fr}}
+@media(max-width:600px){#ai-chat{padding:4rem 1.2rem}.chat-window{height:420px}}
+
+/* ── FAQ ── */
+#faq{background:var(--cream)}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:3rem;border:1px solid rgba(196,154,48,.15)}
+@media(max-width:768px){.faq-grid{grid-template-columns:1fr}}
+.faq-item{border-bottom:1px solid rgba(196,154,48,.12);border-right:1px solid rgba(196,154,48,.12)}
+.faq-item:nth-child(even){border-right:none}
+@media(max-width:768px){.faq-item{border-right:none}}
+.faq-q{padding:1.4rem 1.8rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .3s;gap:1rem}
+.faq-q:hover{background:var(--cream2)}
+.faq-q span{font-size:.88rem;color:var(--text);line-height:1.5;flex:1}
+.faq-q span::before{content:'Q. ';font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1rem;margin-right:.3rem}
+.faq-arrow{color:var(--gold);font-size:.9rem;transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 1.8rem 1.5rem;font-size:.83rem;color:var(--muted);line-height:1.95;font-weight:300;border-top:1px solid rgba(196,154,48,.08)}
+.faq-a::before{content:'A. ';font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--forest);font-size:.95rem;margin-right:.2rem}
+.faq-item.open .faq-a{display:block}
+
+/* ── CONTACT FORM ── */
+#contact-form{background:var(--cream2)}
+.form-wrap-inner{display:grid;grid-template-columns:1fr 1.6fr;gap:5rem;align-items:start}
+@media(max-width:900px){.form-wrap-inner{grid-template-columns:1fr}}
+.contact-info-side .ci-item{margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(196,154,48,.15)}
+.contact-info-side .ci-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.ci-label{font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:.5rem;font-weight:600}
+.ci-val{font-size:.92rem;color:var(--text);line-height:1.9;font-weight:300}
+.ci-phone{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--forest)}
+.form-group{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.3rem}
+.form-group label{font-size:.7rem;letter-spacing:.12em;color:var(--forest);font-weight:600}
+.form-group input,.form-group select,.form-group textarea{border:1px solid rgba(196,154,48,.3);background:white;padding:.8rem 1rem;font-family:'Noto Serif JP',serif;font-size:.87rem;color:var(--text);outline:none;transition:border-color .3s;width:100%}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(196,154,48,.1)}
+.form-group textarea{height:130px;resize:vertical}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+@media(max-width:560px){.form-row-2{grid-template-columns:1fr}}
+.btn-submit{background:var(--forest);color:var(--cream);padding:1rem 3rem;border:none;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.9rem;letter-spacing:.12em;font-weight:600;transition:background .3s;width:100%;margin-top:.5rem}
+.btn-submit:hover{background:#2D5240}
+.form-success{background:rgba(45,106,79,.1);border:1px solid rgba(45,106,79,.35);color:var(--forest);padding:1.2rem 1.5rem;font-size:.85rem;line-height:1.8;display:none;margin-top:1rem}
+.form-success.show{display:block}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid rgba(196,154,48,.08);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between}
+.flogo{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:rgba(247,242,230,.4);font-style:italic}
+.fcopy{font-size:.65rem;color:rgba(247,242,230,.25);letter-spacing:.1em;text-align:right;line-height:1.8}
+@media(max-width:768px){
+  nav{padding:.9rem 1.5rem}.nav-links-r .nav-link-r:first-child{display:none}
+  section{padding:4rem 1.5rem}
+  #ai-chat{padding:4rem 1.5rem}
+  footer{flex-direction:column;gap:.5rem;text-align:center;padding:1.5rem}
+  .fcopy{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    阿蘇うま牧場
+    <small>ASO UMA BOKUJO</small>
+  </a>
+  <div class="nav-links-r">
+    <a href="index.html" class="nav-link-r">← サイトへ戻る</a>
+    <a href="aso-uma-reservation.html" class="nav-link-r primary">ご予約はこちら</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-label">CONTACT & INQUIRY</div>
+  <h1>お問い合わせ</h1>
+  <p>AIアシスタントが24時間お答えします。お気軽にどうぞ。</p>
+</div>
+
+<!-- QUICK CONTACT STRIP -->
+<div class="quick-strip">
+  <a class="qitem" href="tel:090-3987-1901">
+    <div class="qitem-icon">📞</div>
+    <span class="qitem-label">お電話</span>
+    <div class="qitem-val">090-3987-1901</div>
+    <div class="qitem-sub">10:00〜17:00 / 木曜定休</div>
+  </a>
+  <a class="qitem" href="aso-uma-reservation.html">
+    <div class="qitem-icon">📋</div>
+    <span class="qitem-label">ご予約フォーム</span>
+    <div class="qitem-val">オンライン予約</div>
+    <div class="qitem-sub">プランを選んで予約内容を作成</div>
+  </a>
+  <a class="qitem" href="#contact-form">
+    <div class="qitem-icon">✉️</div>
+    <span class="qitem-label">お問い合わせフォーム</span>
+    <div class="qitem-val">メッセージを送る</div>
+    <div class="qitem-sub">折り返しご連絡いたします</div>
+  </a>
+</div>
+
+<!-- AI CHAT SECTION -->
+<section id="ai-chat">
+  <div class="wrap">
+    <div class="label">AI ASSISTANT</div>
+    <h2 class="stitle">AIアシスタントに<br>なんでも聞いてください</h2>
+    <div class="divider"></div>
+
+    <div class="chat-layout">
+      <!-- Info sidebar -->
+      <div class="chat-info">
+        <p>阿蘇うま牧場について、料金・プラン・アクセス・服装・乗馬初心者のご不安など、なんでもAIがお答えします。</p>
+        <p style="font-size:.78rem;color:rgba(247,242,230,.4)">※ AIの回答は参考情報です。予約・最新情報はお電話にてご確認ください。</p>
+
+        <div class="quick-q">
+          <div class="quick-q-label">よく聞かれる質問</div>
+          <button class="qbtn" onclick="sendQuick('初心者でも乗馬できますか？')">初心者でも乗馬できますか？</button>
+          <button class="qbtn" onclick="sendQuick('子どもは何歳から乗馬できますか？')">子どもは何歳から乗馬できますか？</button>
+          <button class="qbtn" onclick="sendQuick('服装は何を着ていけばいいですか？')">服装は何を着ていけばいいですか？</button>
+          <button class="qbtn" onclick="sendQuick('外乗コースはどんな感じですか？')">外乗コースはどんな感じですか？</button>
+          <button class="qbtn" onclick="sendQuick('アクセス方法を教えてください')">アクセス方法を教えてください</button>
+          <button class="qbtn" onclick="sendQuick('料金プランを教えてください')">料金プランを教えてください</button>
+          <button class="qbtn" onclick="sendQuick('ホースセラピーについて教えてください')">ホースセラピーについて教えてください</button>
+        </div>
+      </div>
+
+      <!-- Chat window -->
+      <div>
+        <div class="chat-window" id="chatWindow">
+          <div class="chat-messages" id="chatMessages">
+            <div class="msg bot">こんにちは！阿蘇うま牧場のAIアシスタントです🐴<br>料金・プラン・アクセス・服装・馬の紹介など、なんでもお気軽にご質問ください。</div>
+          </div>
+          <div class="api-error" id="apiError">⚠ AIとの接続に問題が発生しました。しばらくしてから再試行するか、お電話（090-3987-1901）にてご相談ください。</div>
+          <div class="chat-input-row">
+            <input class="chat-input" id="chatInput" type="text" placeholder="ご質問をどうぞ（例：初心者でも大丈夫ですか？）" maxlength="500" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}">
+            <button class="chat-send" id="sendBtn" onclick="sendMsg()">送信</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="label">FAQ</div>
+    <h2 class="stitle">よくあるご質問</h2>
+    <div class="divider"></div>
+    <div class="faq-grid" id="faqGrid"></div>
+  </div>
+</section>
+
+<!-- CONTACT FORM -->
+<section id="contact-form">
+  <div class="wrap">
+    <div class="label">SEND A MESSAGE</div>
+    <h2 class="stitle">お問い合わせフォーム</h2>
+    <div class="divider"></div>
+    <div class="form-wrap-inner" style="margin-top:3rem">
+
+      <!-- Info -->
+      <div class="contact-info-side">
+        <div class="ci-item">
+          <div class="ci-label">お電話（予約優先）</div>
+          <div class="ci-phone"><a href="tel:090-3987-1901" style="color:inherit;text-decoration:none">090-3987-1901</a></div>
+          <div class="ci-val" style="font-size:.78rem;color:var(--muted);margin-top:.3rem">お電話でのご予約・お問い合わせを優先しております</div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-label">営業時間</div>
+          <div class="ci-val">10:00 〜 17:00<br>定休日：木曜日</div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-label">住所</div>
+          <div class="ci-val">〒869-2231<br>熊本県阿蘇市永草1290-1</div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-label">アクセス</div>
+          <div class="ci-val" style="font-size:.82rem;line-height:2">
+            熊本I.C.より車で約50分<br>
+            熊本空港より車で約45分<br>
+            JR市ノ川駅より車で約5分<br>
+            <span style="color:var(--gold)">※ 現金のみ・クレジットカード不可</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>お名前 <span style="color:#8B1A1A">*</span></label>
+            <input type="text" id="cName" placeholder="山田 太郎">
+          </div>
+          <div class="form-group">
+            <label>電話番号 <span style="color:#8B1A1A">*</span></label>
+            <input type="tel" id="cPhone" placeholder="090-0000-0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>メールアドレス</label>
+          <input type="email" id="cEmail" placeholder="example@email.com">
+        </div>
+        <div class="form-group">
+          <label>お問い合わせ種別</label>
+          <select id="cType">
+            <option>乗馬体験のご予約について</option>
+            <option>プラン・料金について</option>
+            <option>アクセス・駐車場について</option>
+            <option>ホースセラピーについて</option>
+            <option>子どもの乗馬について</option>
+            <option>服装・持ち物について</option>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>メッセージ <span style="color:#8B1A1A">*</span></label>
+          <textarea id="cMsg" placeholder="ご質問・ご要望をご自由にお書きください。&#10;例：3名（大人2名・子ども1名）で外乗体験を検討しています。子どもは7歳ですが参加できますか？"></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitForm()">送信する</button>
+        <div class="form-success" id="formSuccess">
+          ✅ お問い合わせ内容を受け付けました。<br>
+          お電話（090-3987-1901）にてご回答いたします。営業時間内（10:00〜17:00 / 木曜定休）にご連絡ください。<br><br>
+          <strong>お急ぎの場合はお電話にてお問い合わせください。</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo">阿蘇うま牧場</div>
+  <div class="fcopy">〒869-2231 熊本県阿蘇市永草1290-1 · 090-3987-1901<br>© 2011 阿蘇うま牧場 All Rights Reserved.</div>
+</footer>
+
+<script>
+/* ─── FAQ DATA ─── */
+const FAQS = [
+  {q:'初めてでも乗馬できますか？', a:'はい、もちろんです！阿蘇うま牧場は初心者の方を大歓迎しています。経験豊富なインストラクターが乗り方・手綱の操作など丁寧に指導しますので、安心してお楽しみいただけます。'},
+  {q:'子どもは何歳から参加できますか？', a:'お子様向けに「えさやり体験（¥100）」「引き馬（¥1,100）」「幼児と保護者の二人乗り（¥1,500）」などをご用意しています。外乗コースは小学生以上が対象となります。'},
+  {q:'服装はどうすればいいですか？', a:'動きやすい服装（長ズボン）と、スニーカーなどの運動靴をご用意ください。スカートやサンダルは乗馬に適しません。ヘルメットはご用意しています（無料）。'},
+  {q:'予約は必要ですか？', a:'えさやり体験・引き馬は予約不要で直接お越しいただけます。外乗コース（ミニ・ミドル・ロング）、体験乗馬コースなどは予約優先です。お電話（090-3987-1901）にてご確認ください。'},
+  {q:'外乗コースとはどんな体験ですか？', a:'牧場の外へ出て、森や木立の中を馬に乗ってトレッキングするコースです。インストラクターが先導し安全に引率します。普段より高い目線で木漏れ日の中を進む体験は格別で、多くのお客様に一番人気のコースです。'},
+  {q:'定休日・営業時間を教えてください', a:'営業時間は10:00〜17:00です。定休日は木曜日となっています。祝日・連休中は変更になる場合がありますので、事前にお電話（090-3987-1901）にてご確認ください。'},
+  {q:'クレジットカードは使えますか？', a:'申し訳ございませんが、現金のみのお取り扱いとなっております。事前に現金をご用意の上、お越しください。'},
+  {q:'アクセス方法は？駐車場はありますか？', a:'熊本I.C.から車で約50分、熊本空港から約45分、JR豊肥本線・市ノ川駅から大分方面へ車で約5分です。駐車場もございます。公共交通機関をご利用の場合はお電話でご相談ください。'},
+  {q:'ホースセラピーとは何ですか？', a:'引きこもりやこころの病気でお悩みの方向けに、馬と触れ合うことで心を癒す「ホースセラピー」を行っています。オーナーは九州では数少ないスペシャルオリンピックス日本の認定トレーナーでもあります。詳しくはお電話にてご相談ください。'},
+  {q:'雨の日でも体験できますか？', a:'天候により中止になる場合があります。悪天候の際はお電話にてご確認の上お越しください。予約された方へは事前にご連絡いたします。'},
+  {q:'グループ・団体での参加はできますか？', a:'グループでのご参加も歓迎しています。外乗コースは一度に3名様まで可能です。大人数の場合は事前にお電話にてご相談ください。'},
+  {q:'駅から牧場まで送迎はありますか？', a:'送迎サービスについてはお電話にてご相談ください。市ノ川駅から車で約5分の立地ですので、タクシーのご利用も便利です。'},
+];
+
+// Build FAQ grid
+const faqGrid = document.getElementById('faqGrid');
+FAQS.forEach((f,i) => {
+  const item = document.createElement('div');
+  item.className = 'faq-item';
+  item.innerHTML = `
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span>${f.q}</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">${f.a}</div>`;
+  faqGrid.appendChild(item);
+});
+
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+
+/* ─── CONTACT FORM ─── */
+function submitForm() {
+  const name = document.getElementById('cName').value.trim();
+  const phone = document.getElementById('cPhone').value.trim();
+  const msg = document.getElementById('cMsg').value.trim();
+  if(!name || !phone || !msg) {
+    alert('お名前・電話番号・メッセージは必須項目です。');
+    return;
+  }
+  // Build mailto
+  const type = document.getElementById('cType').value;
+  const email = document.getElementById('cEmail').value.trim();
+  const body = `【阿蘇うま牧場 お問い合わせ】\n\nお名前：${name}\n電話番号：${phone}\nメール：${email||'—'}\n種別：${type}\n\nメッセージ：\n${msg}`;
+  const mailLink = `mailto:info@aso-uma.com?subject=${encodeURIComponent('お問い合わせ：'+type)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailLink;
+  document.getElementById('formSuccess').classList.add('show');
+}
+
+/* ─── AI CHAT ─── */
+const SYSTEM_PROMPT = `あなたは阿蘇うま牧場の公式AIアシスタントです。以下の情報をもとに、訪問者のご質問に丁寧・簡潔にお答えください。
+
+【基本情報】
+・名称：阿蘇うま牧場
+・住所：〒869-2231 熊本県阿蘇市永草1290-1
+・電話：090-3987-1901
+・営業時間：10:00〜17:00（木曜定休）
+・アクセス：熊本I.C.より約50分 / 熊本空港より約45分 / JR豊肥本線・市ノ川駅より車で5分
+・スタイル：ウエスタン乗馬スタイル
+・創業：2011年（オーナー：ダン＆アイご夫妻）
+・特記：クレジットカード不可・現金のみ。予約は電話優先。
+
+【乗馬プラン・料金】
+1. えさやり体験：¥100（予約不要・随時）
+2. 引き馬：¥1,100（予約不要・直接来場OK）
+3. 幼児と保護者の二人乗り：¥1,500（要予約）
+4. 体験乗馬 20分コース：¥3,500〜（要予約）
+5. 体験乗馬 40分コース：¥5,940（要予約・人気）
+6. ミニ外乗コース（約25分）：¥5,500（要予約・小学生以上・3名まで同時可）
+7. 外乗 ミドルコース（約40分）：¥7,700（要予約・小学生以上・人気）
+8. 外乗 ロングコース（約60分）：¥9,200（要予約・小学生以上）
+9. 中・上級者コース / アリーナレッスン：要相談
+
+外乗とは牧場の外へ出て森や木立の中を馬に乗ってトレッキングすること。初心者でも楽しめる。
+
+【馬の紹介】
+・フリッカー（クォーターホース・2009年生・女の子・おとなしく人懐っこい・外乗で人気）
+・モモ（2014年生・女の子・顔が可愛らしい・乗り心地が良い）
+・チョコ（おっとりした性格・子どもに人気）
+・メリー（安定感抜群・ホースセラピー担当）
+
+【ホースセラピー】
+引きこもりやこころの病気でお悩みの方向けのサービス。
+オーナーは九州では数少ないスペシャルオリンピックス日本の認定トレーナー。
+
+【服装・持ち物】
+長ズボン＋スニーカー（動きやすい服装）。スカート・サンダル不可。ヘルメット無料提供。
+
+【予約について】
+お電話（090-3987-1901）が最優先。えさやり・引き馬は予約不要。外乗・体験乗馬は要予約。
+
+回答は親しみやすく、かつ丁寧に。200文字以内で簡潔に答えてください。予約が必要な質問にはお電話番号090-3987-1901をさりげなく案内してください。`;
+
+let conversation = [];
+
+async function sendMsg() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+  input.value = '';
+  addMsg('user', msg);
+  await callClaude(msg);
+}
+
+function sendQuick(q) {
+  document.getElementById('chatInput').value = q;
+  sendMsg();
+}
+
+function addMsg(role, text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addTyping() {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg typing';
+  div.id = 'typingMsg';
+  div.textContent = '考え中...';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+async function callClaude(userMsg) {
+  const sendBtn = document.getElementById('sendBtn');
+  const apiError = document.getElementById('apiError');
+  sendBtn.disabled = true;
+  apiError.style.display = 'none';
+  const typing = addTyping();
+  
+  conversation.push({role:'user', content: userMsg});
+
+  try {
+    // Netlify Functionsを経由することでAPIキーをサーバー側に隠蔽
+    const res = await fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        system: SYSTEM_PROMPT,
+        messages: conversation
+      })
+    });
+
+    if(!res.ok) throw new Error('API error: ' + res.status);
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'すみません、うまく回答できませんでした。';
+    
+    conversation.push({role:'assistant', content: reply});
+    // Keep conversation context to last 10 turns
+    if(conversation.length > 20) conversation = conversation.slice(-20);
+    
+    typing.remove();
+    addMsg('bot', reply);
+  } catch(e) {
+    typing.remove();
+    apiError.style.display = 'block';
+    conversation.pop(); // remove failed user msg
+    console.error(e);
+  } finally {
+    sendBtn.disabled = false;
+    document.getElementById('chatInput').focus();
+  }
+}
+</script>
+</body>
+</html>
