@@ -389,15 +389,15 @@ footer{background:var(--dark);border-top:1px solid rgba(196,154,48,.08);padding:
 
 <script>
 const PLANS = [
-  {id:'esayari',  name:'えさやり体験',          dur:'随時受付',   price:'¥100',    priceRaw:100,   img:'',    emoji:'🌾', bg:'linear-gradient(160deg,#3D2B0A,#7A5218)', note:'予約不要・直接来場OK', desc:'馬に直接えさを与えてふれあう'},
+  {id:'esayari',  name:'えさやり体験',          dur:'随時受付',   price:'¥100',    priceRaw:100,   img:'http://aso-uma.com/wp-content/uploads/2013/04/top-slide02.jpg',    emoji:'🌾', bg:'linear-gradient(160deg,#3D2B0A,#7A5218)', note:'予約不要・直接来場OK', desc:'馬に直接えさを与えてふれあう'},
   {id:'hikiuma',  name:'引き馬',                dur:'予約不要',   price:'¥1,100',  priceRaw:1100,  img:'http://aso-uma.com/wp-content/uploads/2013/04/hikiuma-01.jpg', emoji:'', note:'予約不要・直接来場OK', desc:'インストラクターが引く馬に乗る安心プラン'},
-  {id:'futari',   name:'幼児と保護者の二人乗り', dur:'要予約',     price:'¥1,500',  priceRaw:1500,  img:'',    bg:'linear-gradient(160deg,#1A2510,#2D4A1E,#0E1808)', emoji:'👶', note:'お子様連れにおすすめ', desc:'小さなお子様と保護者が一緒に乗馬'},
-  {id:'taiken20', name:'体験乗馬 20分コース',    dur:'約20分',    price:'¥3,500〜', priceRaw:3500, img:'',    bg:'linear-gradient(160deg,#0E1D2A,#1A3448,#0A1520)', emoji:'🎠', note:'要予約 · 乗馬デビューに', desc:'乗り方の説明後、場内で自分で操る'},
-  {id:'taiken40', name:'体験乗馬 40分コース',    dur:'約40分',    price:'¥5,940',  priceRaw:5940,  img:'',    bg:'linear-gradient(160deg,#1A2B14,#2E4820,#0E1C0A)', emoji:'🐎', note:'要予約 · 人気プラン', desc:'インストラクター先導後、自由に乗馬'},
+  {id:'futari',   name:'幼児と保護者の二人乗り', dur:'要予約',     price:'¥1,500',  priceRaw:1500,  img:'http://aso-uma.com/wp-content/uploads/2013/04/dan-family.jpg',    bg:'linear-gradient(160deg,#1A2510,#2D4A1E,#0E1808)', emoji:'👶', note:'お子様連れにおすすめ', desc:'小さなお子様と保護者が一緒に乗馬'},
+  {id:'taiken20', name:'体験乗馬 20分コース',    dur:'約20分',    price:'¥3,500〜', priceRaw:3500, img:'https://aso-uma.com/wp-content/uploads/2024/08/img_5593-1.jpg',    bg:'linear-gradient(160deg,#0E1D2A,#1A3448,#0A1520)', emoji:'🎠', note:'要予約 · 乗馬デビューに', desc:'乗り方の説明後、場内で自分で操る'},
+  {id:'taiken40', name:'体験乗馬 40分コース',    dur:'約40分',    price:'¥5,940',  priceRaw:5940,  img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33026.jpg',    bg:'linear-gradient(160deg,#1A2B14,#2E4820,#0E1C0A)', emoji:'🐎', note:'要予約 · 人気プラン', desc:'インストラクター先導後、自由に乗馬'},
   {id:'mini',     name:'ミニ外乗コース',          dur:'約25分',    price:'¥5,500',  priceRaw:5500,  img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33051.jpg', emoji:'', note:'要予約 · 小学生以上', desc:'木立の中を馬に乗ってトレッキング'},
   {id:'middle',   name:'外乗 ミドルコース',       dur:'約40分',    price:'¥7,700',  priceRaw:7700,  img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33074.jpg', emoji:'', note:'要予約 · 小学生以上 · 人気', desc:'森や木立の中を馬に乗ってトレッキング'},
   {id:'long',     name:'外乗 ロングコース',       dur:'約60分',    price:'¥9,200',  priceRaw:9200,  img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33075.jpg', emoji:'', note:'要予約 · 小学生以上', desc:'森と野山を60分かけてゆっくり探索'},
-  {id:'advanced', name:'中・上級者 / アリーナレッスン', dur:'要相談', price:'要相談', priceRaw:0, img:'', bg:'linear-gradient(160deg,#0A1208,#182015,#0E1A10)', emoji:'⭐', note:'要予約 · 要相談', desc:'馬で走れるようになるためのレッスン'},
+  {id:'advanced', name:'中・上級者 / アリーナレッスン', dur:'要相談', price:'要相談', priceRaw:0, img:'http://aso-uma.com/wp-content/uploads/2013/04/top-slide01.png', bg:'linear-gradient(160deg,#0A1208,#182015,#0E1A10)', emoji:'⭐', note:'要予約 · 要相談', desc:'馬で走れるようになるためのレッスン'},
 ];
 
 let selectedPlan = null;

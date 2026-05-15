@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理者画面 | 阿蘇うま牧場</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#1E3A2F;--gold:#C49A30;--gold2:#E8BE5A;--cream:#F7F2E6;--cream2:#EDE6D4;--dark:#14100A;--muted:#8C7B65;--text:#2A1F14;--danger:#8B1A1A;--ok:#1A5C2A}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Serif JP',serif;background:#0E1A12;color:var(--cream);min-height:100vh}
+
+/* ── LOGIN ── */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.login-card{background:rgba(247,242,230,.05);border:1px solid rgba(196,154,48,.2);padding:3rem 2.5rem;width:100%;max-width:400px;text-align:center}
+.login-logo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--cream);margin-bottom:.3rem}
+.login-sub{font-size:.68rem;letter-spacing:.2em;color:var(--gold);margin-bottom:2.5rem}
+.login-label{display:block;font-size:.7rem;letter-spacing:.15em;color:var(--gold);text-align:left;margin-bottom:.5rem}
+.login-input{width:100%;background:rgba(247,242,230,.08);border:1px solid rgba(196,154,48,.25);color:var(--cream);padding:.85rem 1rem;font-family:'Noto Serif JP',serif;font-size:.9rem;outline:none;transition:border-color .3s;margin-bottom:1rem}
+.login-input:focus{border-color:var(--gold)}
+.login-btn{width:100%;background:var(--gold);color:var(--dark);padding:.9rem;border:none;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.9rem;font-weight:600;letter-spacing:.1em;transition:background .3s}
+.login-btn:hover{background:var(--gold2)}
+.login-error{color:#F08080;font-size:.8rem;margin-top:.8rem;display:none}
+
+/* ── ADMIN LAYOUT ── */
+#admin-screen{display:none;min-height:100vh;flex-direction:column}
+header{background:rgba(20,16,10,.97);border-bottom:1px solid rgba(196,154,48,.15);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.header-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--cream);display:flex;flex-direction:column;line-height:1.1}
+.header-logo small{font-size:.58rem;letter-spacing:.18em;color:var(--gold);font-weight:300}
+.header-right{display:flex;align-items:center;gap:1rem}
+.live-link{font-size:.72rem;letter-spacing:.08em;color:rgba(247,242,230,.5);text-decoration:none;border:1px solid rgba(196,154,48,.2);padding:.35rem .8rem;transition:all .3s}
+.live-link:hover{color:var(--gold);border-color:rgba(196,154,48,.5)}
+.logout-btn{background:none;border:1px solid rgba(247,242,230,.2);color:rgba(247,242,230,.6);padding:.35rem .9rem;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.72rem;letter-spacing:.08em;transition:all .3s}
+.logout-btn:hover{border-color:var(--danger);color:#F08080}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid rgba(196,154,48,.15);background:rgba(20,16,10,.5);padding:0 2rem}
+.tab-btn{padding:1rem 1.5rem;background:none;border:none;border-bottom:2px solid transparent;color:rgba(247,242,230,.5);cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.82rem;letter-spacing:.08em;transition:all .3s;margin-bottom:-1px}
+.tab-btn:hover{color:var(--cream)}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* MAIN CONTENT */
+.admin-main{flex:1;padding:2rem;max-width:1100px;margin:0 auto;width:100%}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--cream)}
+.add-btn{background:var(--gold);color:var(--dark);border:none;padding:.6rem 1.3rem;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.78rem;font-weight:600;letter-spacing:.1em;transition:background .3s}
+.add-btn:hover{background:var(--gold2)}
+
+/* ITEM CARDS */
+.item-list{display:flex;flex-direction:column;gap:.8rem}
+.item-card{background:rgba(247,242,230,.04);border:1px solid rgba(196,154,48,.12);padding:1.2rem 1.5rem;display:flex;align-items:center;gap:1.2rem;transition:border-color .3s}
+.item-card:hover{border-color:rgba(196,154,48,.3)}
+.item-thumb{width:70px;height:52px;object-fit:cover;flex-shrink:0;border:1px solid rgba(196,154,48,.15);filter:saturate(.8)}
+.item-thumb-placeholder{width:70px;height:52px;flex-shrink:0;background:rgba(196,154,48,.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem;border:1px solid rgba(196,154,48,.15)}
+.item-info{flex:1;min-width:0}
+.item-name{font-size:.95rem;color:var(--cream);margin-bottom:.2rem;font-weight:400}
+.item-meta{font-size:.72rem;color:var(--muted);letter-spacing:.05em}
+.item-actions{display:flex;gap:.5rem;flex-shrink:0}
+.edit-btn{background:none;border:1px solid rgba(196,154,48,.3);color:var(--gold);padding:.4rem .9rem;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.72rem;letter-spacing:.08em;transition:all .3s}
+.edit-btn:hover{background:rgba(196,154,48,.1)}
+.del-btn{background:none;border:1px solid rgba(200,60,60,.3);color:#E08080;padding:.4rem .9rem;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.72rem;letter-spacing:.08em;transition:all .3s}
+.del-btn:hover{background:rgba(200,60,60,.1)}
+.hot-badge{display:inline-block;background:var(--gold);color:var(--dark);font-size:.6rem;padding:.18rem .5rem;font-weight:600;letter-spacing:.06em;margin-left:.5rem;vertical-align:middle}
+
+/* DRAG HANDLE */
+.drag-handle{cursor:grab;color:rgba(196,154,48,.3);font-size:1.1rem;flex-shrink:0;padding:0 .3rem;user-select:none}
+.drag-handle:active{cursor:grabbing}
+.item-card.dragging{opacity:.5;border-style:dashed}
+.item-card.drag-over{border-color:var(--gold)}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(14,26,18,.88);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:#0E1A12;border:1px solid rgba(196,154,48,.25);width:100%;max-width:580px;max-height:90vh;overflow-y:auto}
+.modal-header{padding:1.5rem 2rem;border-bottom:1px solid rgba(196,154,48,.15);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--cream)}
+.modal-close{background:none;border:none;color:rgba(247,242,230,.4);cursor:pointer;font-size:1.4rem;line-height:1;padding:.25rem;transition:color .2s}
+.modal-close:hover{color:var(--cream)}
+.modal-body{padding:2rem}
+.form-group{margin-bottom:1.3rem}
+.form-group label{display:block;font-size:.68rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:rgba(247,242,230,.07);border:1px solid rgba(196,154,48,.2);color:var(--cream);padding:.75rem 1rem;font-family:'Noto Serif JP',serif;font-size:.85rem;outline:none;transition:border-color .3s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold)}
+.form-group textarea{height:90px;resize:vertical}
+.form-group select option{background:#0E1A12}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.img-preview{margin-top:.5rem;width:100%;height:80px;object-fit:cover;border:1px solid rgba(196,154,48,.15);display:none;filter:saturate(.8)}
+.checkbox-row{display:flex;align-items:center;gap:.6rem}
+.checkbox-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--gold);cursor:pointer}
+.checkbox-row label{font-size:.82rem;color:var(--cream);letter-spacing:.04em;cursor:pointer}
+.modal-footer{padding:1.2rem 2rem;border-top:1px solid rgba(196,154,48,.12);display:flex;gap:.8rem;justify-content:flex-end}
+.save-btn{background:var(--gold);color:var(--dark);border:none;padding:.75rem 2rem;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.85rem;font-weight:600;letter-spacing:.1em;transition:background .3s}
+.save-btn:hover{background:var(--gold2)}
+.save-btn:disabled{background:#888;cursor:not-allowed}
+.cancel-btn{background:none;border:1px solid rgba(247,242,230,.2);color:rgba(247,242,230,.6);padding:.75rem 1.5rem;cursor:pointer;font-family:'Noto Serif JP',serif;font-size:.85rem;letter-spacing:.08em;transition:all .3s}
+.cancel-btn:hover{border-color:rgba(247,242,230,.4);color:var(--cream)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;padding:1rem 1.5rem;font-size:.82rem;letter-spacing:.06em;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.success{background:rgba(26,92,42,.95);border:1px solid rgba(80,160,100,.4);color:#A0F0B0}
+.toast.error{background:rgba(100,20,20,.95);border:1px solid rgba(200,80,80,.4);color:#F0A0A0}
+
+/* LOADING */
+.loading-bar{height:2px;background:linear-gradient(to right,var(--gold),var(--gold2));width:0;transition:width .3s;position:fixed;top:0;left:0;z-index:999}
+
+/* SAVE INDICATOR */
+.save-indicator{font-size:.7rem;color:rgba(247,242,230,.4);letter-spacing:.08em}
+.save-indicator.saving{color:var(--gold)}
+.save-indicator.saved{color:#80D080}
+
+.pane{display:none}
+.pane.active{display:block}
+
+@media(max-width:600px){
+  .form-row{grid-template-columns:1fr}
+  .item-card{flex-wrap:wrap}
+  .item-actions{width:100%;justify-content:flex-end}
+  .tabs{padding:0 1rem}
+  .tab-btn{padding:.8rem 1rem;font-size:.76rem}
+  .admin-main{padding:1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="loading-bar" id="loadingBar"></div>
+
+<!-- ── LOGIN ── -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">阿蘇うま牧場</div>
+    <div class="login-sub">ADMIN PANEL</div>
+    <label class="login-label">管理者パスワード</label>
+    <input type="password" class="login-input" id="loginPw" placeholder="パスワードを入力" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">ログイン</button>
+    <div class="login-error" id="loginError">パスワードが正しくありません</div>
+  </div>
+</div>
+
+<!-- ── ADMIN ── -->
+<div id="admin-screen" style="display:none;flex-direction:column;min-height:100vh">
+  <header>
+    <div class="header-logo">
+      阿蘇うま牧場 管理画面
+      <small>ADMIN PANEL</small>
+    </div>
+    <div class="header-right">
+      <span class="save-indicator" id="saveIndicator"></span>
+      <a href="index.html" target="_blank" class="live-link">← サイトを確認</a>
+      <button class="logout-btn" onclick="doLogout()">ログアウト</button>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('horses')">🐴 馬の管理</button>
+    <button class="tab-btn" onclick="switchTab('plans')">📋 プランの管理</button>
+  </div>
+
+  <div class="admin-main">
+
+    <!-- HORSES PANE -->
+    <div class="pane active" id="pane-horses">
+      <div class="section-header">
+        <div class="section-title">馬の管理</div>
+        <button class="add-btn" onclick="openHorseModal()">＋ 馬を追加</button>
+      </div>
+      <p style="font-size:.75rem;color:var(--muted);margin-bottom:1.2rem;letter-spacing:.06em">
+        ドラッグで順番を変更できます。変更は自動保存されます。
+      </p>
+      <div class="item-list" id="horseList"></div>
+    </div>
+
+    <!-- PLANS PANE -->
+    <div class="pane" id="pane-plans">
+      <div class="section-header">
+        <div class="section-title">プランの管理</div>
+        <button class="add-btn" onclick="openPlanModal()">＋ プランを追加</button>
+      </div>
+      <p style="font-size:.75rem;color:var(--muted);margin-bottom:1.2rem;letter-spacing:.06em">
+        ドラッグで順番を変更できます。変更は自動保存されます。
+      </p>
+      <div class="item-list" id="planList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── HORSE MODAL ── -->
+<div class="modal-overlay" id="horseModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="horseModalTitle">馬を追加</div>
+      <button class="modal-close" onclick="closeModal('horseModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="horseEditId">
+      <div class="form-row">
+        <div class="form-group">
+          <label>名前（英語）*</label>
+          <input type="text" id="hName" placeholder="例: Flicker">
+        </div>
+        <div class="form-group">
+          <label>名前（日本語）*</label>
+          <input type="text" id="hNameJa" placeholder="例: フリッカー">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>品種・生年など</label>
+        <input type="text" id="hBreed" placeholder="例: クォーターホース · 2009年生">
+      </div>
+      <div class="form-group">
+        <label>説明文 *</label>
+        <textarea id="hDesc" placeholder="馬の性格や特徴を入力してください"></textarea>
+      </div>
+      <div class="form-group">
+        <label>タグ（役割）</label>
+        <input type="text" id="hTag" placeholder="例: 外乗コース担当">
+      </div>
+      <div class="form-group">
+        <label>写真URL（1枚目）</label>
+        <input type="url" id="hImg1" placeholder="https://..." oninput="previewImg(this,'hPreview1')">
+        <img id="hPreview1" class="img-preview" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+      </div>
+      <div class="form-group">
+        <label>写真URL（2枚目・任意）</label>
+        <input type="url" id="hImg2" placeholder="https://..." oninput="previewImg(this,'hPreview2')">
+        <img id="hPreview2" class="img-preview" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="cancel-btn" onclick="closeModal('horseModal')">キャンセル</button>
+      <button class="save-btn" id="horseModalSaveBtn" onclick="saveHorse()">保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── PLAN MODAL ── -->
+<div class="modal-overlay" id="planModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="planModalTitle">プランを追加</div>
+      <button class="modal-close" onclick="closeModal('planModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="planEditId">
+      <div class="form-group">
+        <label>プラン名 *</label>
+        <input type="text" id="pName" placeholder="例: 外乗 ミドルコース">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>時間・対象</label>
+          <input type="text" id="pDur" placeholder="例: 約40分">
+        </div>
+        <div class="form-group">
+          <label>備考・条件</label>
+          <input type="text" id="pNote" placeholder="例: 要予約 · 小学生以上">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>料金（表示テキスト） *</label>
+        <input type="text" id="pPrice" placeholder="例: ¥7,700  または  お問い合わせ">
+      </div>
+      <div class="form-group">
+        <label>説明文 *</label>
+        <textarea id="pDesc" placeholder="プランの詳細説明を入力してください"></textarea>
+      </div>
+      <div class="form-group">
+        <label>写真URL</label>
+        <input type="url" id="pImg" placeholder="https://..." oninput="previewImg(this,'pPreview')">
+        <img id="pPreview" class="img-preview" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+      </div>
+      <div class="form-group">
+        <div class="checkbox-row">
+          <input type="checkbox" id="pHot">
+          <label for="pHot">「おすすめ」バッジを表示する</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="cancel-btn" onclick="closeModal('planModal')">キャンセル</button>
+      <button class="save-btn" id="planModalSaveBtn" onclick="savePlan()">保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let PASSWORD = '';
+let horses = [];
+let plans  = [];
+let saveTimer = null;
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+async function doLogin() {
+  const pw = document.getElementById('loginPw').value;
+  if (!pw) return;
+  
+  setLoading(true);
+  try {
+    // Verify password by attempting a read operation
+    const res = await fetch('/.netlify/functions/get-content');
+    if (!res.ok) throw new Error('Network error');
+    const data = await res.json();
+
+    // Try a write to verify password (empty write with current data won't change anything)
+    const testRes = await fetch('/.netlify/functions/update-content', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ password: pw, type: 'horses', data: data.horses })
+    });
+    const testData = await testRes.json();
+    
+    if (!testRes.ok || testData.error) {
+      showLoginError();
+      return;
+    }
+    
+    PASSWORD = pw;
+    sessionStorage.setItem('aso_admin_token', btoa(pw + ':' + Date.now()));
+    horses = data.horses;
+    plans  = data.plans;
+    showAdmin();
+  } catch {
+    showLoginError();
+  } finally {
+    setLoading(false);
+  }
+}
+
+function showLoginError() {
+  const err = document.getElementById('loginError');
+  err.style.display = 'block';
+  document.getElementById('loginPw').value = '';
+  document.getElementById('loginPw').focus();
+  setTimeout(() => err.style.display = 'none', 3000);
+}
+
+function doLogout() {
+  PASSWORD = '';
+  sessionStorage.removeItem('aso_admin_token');
+  document.getElementById('admin-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('loginPw').value = '';
+}
+
+function showAdmin() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-screen').style.display = 'flex';
+  renderHorseList();
+  renderPlanList();
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['horses','plans'][i] === tab));
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('pane-' + tab).classList.add('active');
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderHorseList() {
+  const list = document.getElementById('horseList');
+  if (!horses.length) { list.innerHTML = '<p style="color:var(--muted);font-size:.82rem;padding:1rem">馬が登録されていません</p>'; return; }
+  list.innerHTML = horses.map((h, i) => `
+    <div class="item-card" draggable="true" data-idx="${i}" data-type="horses"
+         ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dragDrop(event)" ondragleave="dragLeave(event)">
+      <span class="drag-handle" title="ドラッグで並び替え">⠿</span>
+      ${h.img1 ? `<img class="item-thumb" src="${h.img1}" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : '<div class="item-thumb-placeholder">🐴</div>'}
+      <div class="item-info">
+        <div class="item-name">${escHtml(h.name)} <span style="color:var(--muted);font-size:.82rem">/ ${escHtml(h.nameJa)}</span></div>
+        <div class="item-meta">${escHtml(h.breed || '—')} · ${escHtml(h.tag || '—')}</div>
+      </div>
+      <div class="item-actions">
+        <button class="edit-btn" onclick="openHorseModal(${i})">編集</button>
+        <button class="del-btn" onclick="deleteItem('horses',${i})">削除</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderPlanList() {
+  const list = document.getElementById('planList');
+  if (!plans.length) { list.innerHTML = '<p style="color:var(--muted);font-size:.82rem;padding:1rem">プランが登録されていません</p>'; return; }
+  list.innerHTML = plans.map((p, i) => `
+    <div class="item-card" draggable="true" data-idx="${i}" data-type="plans"
+         ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dragDrop(event)" ondragleave="dragLeave(event)">
+      <span class="drag-handle" title="ドラッグで並び替え">⠿</span>
+      ${p.img ? `<img class="item-thumb" src="${p.img}" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : '<div class="item-thumb-placeholder">📋</div>'}
+      <div class="item-info">
+        <div class="item-name">${escHtml(p.name)}${p.hot ? '<span class="hot-badge">おすすめ</span>' : ''}</div>
+        <div class="item-meta">${escHtml(p.dur || '—')} · ${escHtml(p.price || '—')}</div>
+      </div>
+      <div class="item-actions">
+        <button class="edit-btn" onclick="openPlanModal(${i})">編集</button>
+        <button class="del-btn" onclick="deleteItem('plans',${i})">削除</button>
+      </div>
+    </div>`).join('');
+}
+
+// ── HORSE MODAL ───────────────────────────────────────────────────────────────
+function openHorseModal(idx) {
+  const modal = document.getElementById('horseModal');
+  const isEdit = idx !== undefined;
+  document.getElementById('horseModalTitle').textContent = isEdit ? '馬を編集' : '馬を追加';
+  document.getElementById('horseEditId').value = isEdit ? idx : '';
+  
+  const h = isEdit ? horses[idx] : {};
+  document.getElementById('hName').value    = h.name    || '';
+  document.getElementById('hNameJa').value  = h.nameJa  || '';
+  document.getElementById('hBreed').value   = h.breed   || '';
+  document.getElementById('hDesc').value    = h.desc    || '';
+  document.getElementById('hTag').value     = h.tag     || '';
+  document.getElementById('hImg1').value    = h.img1    || '';
+  document.getElementById('hImg2').value    = h.img2    || '';
+  previewImg({value: h.img1 || ''}, 'hPreview1');
+  previewImg({value: h.img2 || ''}, 'hPreview2');
+  modal.classList.add('open');
+  document.getElementById('hName').focus();
+}
+
+async function saveHorse() {
+  const name   = document.getElementById('hName').value.trim();
+  const nameJa = document.getElementById('hNameJa').value.trim();
+  const desc   = document.getElementById('hDesc').value.trim();
+  if (!name || !nameJa || !desc) { showToast('名前（英語・日本語）と説明文は必須です', 'error'); return; }
+  
+  const idx = document.getElementById('horseEditId').value;
+  const horse = {
+    id:     (idx !== '' ? horses[idx].id : null) || name.toLowerCase().replace(/\s+/g,'_') + '_' + Date.now(),
+    name, nameJa,
+    breed:  document.getElementById('hBreed').value.trim(),
+    desc,
+    tag:    document.getElementById('hTag').value.trim(),
+    img1:   document.getElementById('hImg1').value.trim(),
+    img2:   document.getElementById('hImg2').value.trim(),
+    bg:     idx !== '' ? (horses[idx].bg || '') : '',
+  };
+  
+  if (idx !== '') { horses[idx] = horse; } else { horses.push(horse); }
+  renderHorseList();
+  closeModal('horseModal');
+  await saveData('horses');
+}
+
+// ── PLAN MODAL ────────────────────────────────────────────────────────────────
+function openPlanModal(idx) {
+  const isEdit = idx !== undefined;
+  document.getElementById('planModalTitle').textContent = isEdit ? 'プランを編集' : 'プランを追加';
+  document.getElementById('planEditId').value = isEdit ? idx : '';
+  
+  const p = isEdit ? plans[idx] : {};
+  document.getElementById('pName').value  = p.name  || '';
+  document.getElementById('pDur').value   = p.dur   || '';
+  document.getElementById('pNote').value  = p.note  || '';
+  document.getElementById('pPrice').value = p.price || '';
+  document.getElementById('pDesc').value  = p.desc  || '';
+  document.getElementById('pImg').value   = p.img   || '';
+  document.getElementById('pHot').checked = !!p.hot;
+  previewImg({value: p.img || ''}, 'pPreview');
+  document.getElementById('planModal').classList.add('open');
+  document.getElementById('pName').focus();
+}
+
+async function savePlan() {
+  const name  = document.getElementById('pName').value.trim();
+  const price = document.getElementById('pPrice').value.trim();
+  const desc  = document.getElementById('pDesc').value.trim();
+  if (!name || !price || !desc) { showToast('プラン名・料金・説明文は必須です', 'error'); return; }
+  
+  const idx = document.getElementById('planEditId').value;
+  const plan = {
+    id:    (idx !== '' ? plans[idx].id : null) || name.replace(/\s+/g,'_').toLowerCase() + '_' + Date.now(),
+    name,
+    dur:   document.getElementById('pDur').value.trim(),
+    note:  document.getElementById('pNote').value.trim(),
+    price,
+    priceNum: parseInt(price.replace(/[^\d]/g,'')) || 0,
+    desc,
+    img:   document.getElementById('pImg').value.trim(),
+    hot:   document.getElementById('pHot').checked,
+  };
+  
+  if (idx !== '') { plans[idx] = plan; } else { plans.push(plan); }
+  renderPlanList();
+  closeModal('planModal');
+  await saveData('plans');
+}
+
+// ── DELETE ────────────────────────────────────────────────────────────────────
+async function deleteItem(type, idx) {
+  const item = type === 'horses' ? horses[idx] : plans[idx];
+  const name = item.name || item.nameJa || 'この項目';
+  if (!confirm(`「${name}」を削除しますか？この操作は元に戻せません。`)) return;
+  
+  if (type === 'horses') { horses.splice(idx, 1); renderHorseList(); }
+  else { plans.splice(idx, 1); renderPlanList(); }
+  await saveData(type);
+}
+
+// ── DRAG & DROP ───────────────────────────────────────────────────────────────
+let dragIdx = null;
+let dragType = null;
+
+function dragStart(e) {
+  dragIdx  = parseInt(e.currentTarget.dataset.idx);
+  dragType = e.currentTarget.dataset.type;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+
+function dragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  e.currentTarget.classList.add('drag-over');
+}
+
+function dragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+
+async function dragDrop(e) {
+  e.preventDefault();
+  const toIdx  = parseInt(e.currentTarget.dataset.idx);
+  const toType = e.currentTarget.dataset.type;
+  e.currentTarget.classList.remove('drag-over');
+  document.querySelectorAll('.item-card').forEach(c => c.classList.remove('dragging'));
+  
+  if (dragType !== toType || dragIdx === null || dragIdx === toIdx) return;
+  
+  const arr = dragType === 'horses' ? horses : plans;
+  const [moved] = arr.splice(dragIdx, 1);
+  arr.splice(toIdx, 0, moved);
+  
+  if (dragType === 'horses') renderHorseList();
+  else renderPlanList();
+  
+  dragIdx = null;
+  await saveData(dragType);
+}
+
+// ── SAVE ──────────────────────────────────────────────────────────────────────
+async function saveData(type) {
+  const ind = document.getElementById('saveIndicator');
+  ind.textContent = '保存中...';
+  ind.className = 'save-indicator saving';
+  setLoading(true);
+  
+  const data = type === 'horses' ? horses : plans;
+  try {
+    const res = await fetch('/.netlify/functions/update-content', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ password: PASSWORD, type, data })
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Error');
+    
+    ind.textContent = '✓ 保存完了';
+    ind.className = 'save-indicator saved';
+    showToast('保存しました', 'success');
+    setTimeout(() => { ind.textContent = ''; ind.className = 'save-indicator'; }, 3000);
+  } catch (e) {
+    ind.textContent = '保存失敗';
+    ind.className = 'save-indicator';
+    showToast('保存に失敗しました: ' + e.message, 'error');
+  } finally {
+    setLoading(false);
+  }
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function previewImg(input, previewId) {
+  const prev = document.getElementById(previewId);
+  if (input.value && input.value.startsWith('http')) {
+    prev.src = input.value;
+    prev.style.display = 'block';
+  } else {
+    prev.style.display = 'none';
+  }
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+function setLoading(on) {
+  const bar = document.getElementById('loadingBar');
+  bar.style.width = on ? '70%' : '100%';
+  if (!on) setTimeout(() => bar.style.width = '0', 300);
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── KEYBOARD ─────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
