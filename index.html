@@ -555,100 +555,96 @@ document.querySelectorAll('.photostrip-track img').forEach(img => {
 });
 </script>
 
-<script>
-// ── Default data (shown immediately, overridden by API if available) ─────────
-const DEFAULT_HORSES=[{id:'flicker',name:'Flicker',nameJa:'フリッカー',breed:'クォーターホース · 2009年生',desc:'少しだけ男顔だけど、とてもおとなしい女の子。人懐っこくて首などを掻いてあげると寄り添ってきます。外乗コースで一番人気の馬で、木漏れ日の中をゆったりと歩む姿がとても美しい。',tag:'外乗コース担当',img1:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33026.jpg',img2:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33028.jpg',bg:'linear-gradient(160deg,#2A1A0A,#5C3018)'},{id:'momo',name:'Momo',nameJa:'モモ',breed:'2014年生',desc:'とても顔の可愛らしい女の子。気難しいところもありますが、ゆったり歩いてくれるので乗り心地が良く、多くのお客様の心をつかんでいます。',tag:'外乗 / ホースセラピー',img1:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33040.jpg',img2:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33047.jpg',bg:'linear-gradient(160deg,#1E0E18,#3A1830)'},{id:'choco',name:'Choco',nameJa:'チョコ',breed:'',desc:'チョコレート色の美しい毛並みが印象的。おっとりとした性格で子どもたちに大人気。えさやり体験や引き馬でも活躍しています。',tag:'子ども・初心者向け',img1:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33047.jpg',img2:'',bg:'linear-gradient(160deg,#2A1505,#5C2E10)'},{id:'merry',name:'Merry',nameJa:'メリー',breed:'',desc:'牧場のムードメーカー。しっかり調教されており安定感抜群。ホースセラピーでの貢献が大きく、訪れた方の心を癒しています。',tag:'ホースセラピー担当',img1:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33040.jpg',img2:'',bg:'linear-gradient(160deg,#0A1E14,#144A2C)'}];
-const DEFAULT_PLANS=[{id:'esayari',name:'えさやり体験',dur:'随時受付',note:'予約不要・直接来場OK',price:'¥100',priceNum:100,desc:'馬に直接えさを与えてふれあう体験。お子様から年配の方まで楽しめます。',img:'http://aso-uma.com/wp-content/uploads/2013/04/top-slide02.jpg',hot:false},{id:'hikiuma',name:'引き馬',dur:'予約不要',note:'予約不要・直接来場OK',price:'¥1,100',priceNum:1100,desc:'インストラクターが引く馬に乗る安心プラン。小さなお子様からご年配の方まで。',img:'http://aso-uma.com/wp-content/uploads/2013/04/hikiuma-01.jpg',hot:false},{id:'futari',name:'幼児と保護者の二人乗り',dur:'要予約',note:'お子様連れにおすすめ',price:'¥1,500',priceNum:1500,desc:'小さなお子様と保護者が一緒に馬に乗れる特別プラン。',img:'http://aso-uma.com/wp-content/uploads/2013/04/dan-family.jpg',hot:false},{id:'taiken20',name:'体験乗馬 20分コース',dur:'約20分',note:'要予約 · 乗馬デビューに',price:'¥3,500〜',priceNum:3500,desc:'乗り方の説明後、場内を自分で馬を操る楽しさを体験。乗馬デビューに最適。',img:'https://aso-uma.com/wp-content/uploads/2024/08/img_5593-1.jpg',hot:false},{id:'taiken40',name:'体験乗馬 40分コース',dur:'約40分',note:'要予約 · 人気プラン',price:'¥5,940',priceNum:5940,desc:'インストラクターの先導後、馬場内で自由に乗馬。ゆったりと馬との時間を満喫できる人気プラン。',img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33026.jpg',hot:true},{id:'mini',name:'ミニ外乗コース',dur:'約25分',note:'要予約 · 小学生以上',price:'¥5,500',priceNum:5500,desc:'牧場の外へ。木立の中を馬に乗ってトレッキング。3名様まで同時に。',img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33051.jpg',hot:true},{id:'middle',name:'外乗 ミドルコース',dur:'約40分',note:'要予約 · 小学生以上',price:'¥7,700',priceNum:7700,desc:'森や木立の中を40分かけてトレッキング。阿蘇の自然を五感で感じる人気コースです。',img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33074.jpg',hot:true},{id:'long',name:'外乗 ロングコース',dur:'約60分',note:'要予約 · 小学生以上',price:'¥9,200',priceNum:9200,desc:'森と野山を60分かけてゆっくり探索。馬との深い一体感を堪能できる最長コース。',img:'http://aso-uma.com/wp-content/uploads/2019/09/5D_33075.jpg',hot:false},{id:'advanced',name:'中・上級者 / アリーナレッスン',dur:'要相談',note:'要相談・要予約',price:'お問い合わせ',priceNum:0,desc:'馬で走れるようになるためのレッスン。本格的に乗馬技術を磨きたい方へ。',img:'http://aso-uma.com/wp-content/uploads/2013/04/top-slide01.png',hot:false}];
+<<script>
+// ── Default data ──────────────────────────────────────────────────────────
+var HORSES=[
+  {name:"Flicker",nameJa:"フリッカー",breed:"クォーターホース・2009年生",desc:"少しだけ男顔だけど、とてもおとなしい女の子。人憴っこくて首などを掛いてあげると寄り添ってきます。外乗コースで一番人気の馬で、木漏れ日の中をゆったりと歩む姿がとても美しい。",tag:"外乗コース担当",img1:"http://aso-uma.com/wp-content/uploads/2019/09/5D_33026.jpg",img2:"http://aso-uma.com/wp-content/uploads/2019/09/5D_33028.jpg",bg:"linear-gradient(160deg,#2A1A0A,#5C3018)"},
+  {name:"Momo",nameJa:"モモ",breed:"2014年生",desc:"とても顔の可愛らしい女の子。気難しいところもありますが、ゆったり歩いてくれるので乗り心地が良く、多くのお客様の心をつかんでいます。",tag:"外乗 / ホースセラピー",img1:"http://aso-uma.com/wp-content/uploads/2019/09/5D_33040.jpg",img2:"http://aso-uma.com/wp-content/uploads/2019/09/5D_33047.jpg",bg:"linear-gradient(160deg,#1E0E18,#3A1830)"},
+  {name:"Choco",nameJa:"チョコ",breed:"",desc:"チョコレート色の美しい毛並みが印象的。おっとりとした性格で子どもたちに大人気。えさやり体験や引き馬でも活躍しています。",tag:"子ども・初心者向け",img1:"http://aso-uma.com/wp-content/uploads/2019/09/5D_33047.jpg",img2:"",bg:"linear-gradient(160deg,#2A1505,#5C2E10)"},
+  {name:"Merry",nameJa:"メリー",breed:"",desc:"牧場のムードメーカー。しっかり調教されており安定感抗群。ホースセラピーでの貢献が大きく、訪れた方の心を癍しています。",tag:"ホースセラピー担当",img1:"http://aso-uma.com/wp-content/uploads/2019/09/5D_33040.jpg",img2:"",bg:"linear-gradient(160deg,#0A1E14,#144A2C)"}
+];
+var PLANS=[
+  {id:"esayari",name:"えさやり体験",dur:"随時受付",note:"予約不要・直接来場OK",price:"¥100",priceNum:100,desc:"馬に直接えさを与えてふれあう体験。お子様から年配の方まで楽しめます。",img:"http://aso-uma.com/wp-content/uploads/2013/04/top-slide02.jpg",hot:false},
+  {id:"hikiuma",name:"引き馬",dur:"予約不要",note:"予約不要・直接来場OK",price:"¥1,100",priceNum:1100,desc:"インストラクターが引く馬に乗る安心プラン。小さなお子様からご年配の方まで。",img:"http://aso-uma.com/wp-content/uploads/2013/04/hikiuma-01.jpg",hot:false},
+  {id:"futari",name:"幼児と保護者の二人乗り",dur:"要予約",note:"お子様連れにおすすめ",price:"¥1,500",priceNum:1500,desc:"小さなお子様と保護者が一緒に馬に乗れる特別プラン。",img:"http://aso-uma.com/wp-content/uploads/2013/04/dan-family.jpg",hot:false},
+  {id:"taiken20",name:"体験乗馬 20分コース",dur:"約20分",note:"要予約・乗馬デビューに",price:"¥3,500～",priceNum:3500,desc:"乗り方の説明後、場内を自分で馬を操る楽しさを体験。乗馬デビューに最適。",img:"https://aso-uma.com/wp-content/uploads/2024/08/img_5593-1.jpg",hot:false},
+  {id:"taiken40",name:"体験乗馬 40分コース",dur:"約40分",note:"要予約・人気プラン",price:"¥5,940",priceNum:5940,desc:"インストラクターの先導後、馬場内で自由に乗馬。ゆったりと馬との時間を満喫できる人気プラン。",img:"http://aso-uma.com/wp-content/uploads/2019/09/5D_33026.jpg",hot:true},
+  {id:"mini",name:"ミニ外乗コース",dur:"約25分",note:"要予約・小学生以上",price:"¥5,500",priceNum:5500,desc:"牧場の外へ。木立の中を馬に乗ってトレッキング。3名様まで同時に。",img:"http://aso-uma.com/wp-content/uploads/2019/09/5D_33051.jpg",hot:true},
+  {id:"middle",name:"外乗 ミドルコース",dur:"約40分",note:"要予約・小学生以上",price:"¥7,700",priceNum:7700,desc:"森や木立の中をゅ4分かけてトレッキング。阿蘇の自然を五感で感じる人気コースです。",img:"http://aso-uma.com/wp-content/uploads/2019/09/5D_33074.jpg",hot:true},
+  {id:"long",name:"外乗 ロングコース",dur:"約60分",note:"要予約・小学生以上",price:"¥9,200",priceNum:9200,desc:"森と野山をだ60分かけてゆっくり探索。馬との深い一体感を堕能できる最長コース。",img:"http://aso-uma.com/wp-content/uploads/2019/09/5D_33075.jpg",hot:false},
+  {id:"advanced",name:"中・上級者 / アリーナレッスン",dur:"要相談",note:"要相談・要予約",price:"お問い合わせ",priceNum:0,desc:"馬で走れるようになるためのレッスン。本格的に乗馬技術を磨きたい方へ。",img:"http://aso-uma.com/wp-content/uploads/2013/04/top-slide01.png",hot:false}
+];
 
-// ── Render defaults immediately ───────────────────────────────────────────────
-renderHorses(DEFAULT_HORSES);
-renderPlans(DEFAULT_PLANS);
-
-// ── Then override with API data if available ──────────────────────────────────
-(async function loadContent() {
-  try {
-    const res = await fetch('/.netlify/functions/get-content');
-    if (!res.ok) return;
-    const { horses, plans } = await res.json();
-    if (horses && horses.length) renderHorses(horses);
-    if (plans  && plans.length)  renderPlans(plans);
-    document.querySelectorAll('.reveal:not(.visible)').forEach(el => io && io.observe(el));
-  } catch { /* defaults already rendered */ }
-})();
-
-function renderHorses(horses) {
-  const grid = document.getElementById('horses-grid');
+function renderHorses(data) {
+  var grid = document.getElementById("horses-grid");
   if (!grid) return;
-  const delays = ['', 'd1', 'd2', 'd3'];
-  grid.innerHTML = horses.map((h, i) => {
-    const d = delays[i % 4];
-    const img1 = h.img1 ? `<img src="${h.img1}" alt="${h.nameJa||h.name}" referrerpolicy="no-referrer" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.9)" onerror="this.style.display='none'">` : '';
-    const img2 = h.img2 ? `<img class="hcard-img" src="${h.img2}" alt="${h.nameJa||h.name}" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : '';
-    const bg = h.bg || 'linear-gradient(160deg,#1E3A2F,#2D5240)';
-    const hasTwo = h.img1 && h.img2;
-    let imgSection;
-    if (hasTwo) {
-      imgSection = `<div class="hcard-imgs">${
-        `<img class="hcard-img" src="${h.img1}" alt="${h.nameJa||h.name}" referrerpolicy="no-referrer" onerror="this.style.display='none'">` + img2
-      }</div>`;
+  var h = "";
+  for (var i = 0; i < data.length; i++) {
+    var horse = data[i];
+    var bg = horse.bg || "#1E3A2F";
+    h += '<div class="hcard">';
+    if (horse.img1 && horse.img2) {
+      h += '<div class="hcard-imgs">';
+      h += '<img class="hcard-img" src="' + horse.img1 + '" referrerpolicy="no-referrer" onerror="this.style.display='none'">';
+      h += '<img class="hcard-img" src="' + horse.img2 + '" referrerpolicy="no-referrer" onerror="this.style.display='none'">';
+      h += '</div>';
     } else {
-      imgSection = `<div class="hcard-imgs" style="position:relative;background:${bg}">
-        ${img1}
-      </div>`;
+      h += '<div class="hcard-imgs" style="position:relative;background:' + bg + '">';
+      if (horse.img1) {
+        h += '<img src="' + horse.img1 + '" referrerpolicy="no-referrer" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.9)" onerror="this.style.display='none'">';
+      }
+      h += '</div>';
     }
-    return `<div class="hcard reveal ${d}">
-      ${imgSection}
-      <div class="hcard-info">
-        <div class="hname">${h.name}</div>
-        <div class="hbreed">${[h.nameJa, h.breed].filter(Boolean).join(' · ')}</div>
-        <div class="hdesc">${h.desc||''}</div>
-        ${h.tag ? `<span class="htag">${h.tag}</span>` : ''}
-      </div>
-    </div>`;
-  }).join('');
-  // Make all cards visible (bypass IntersectionObserver for dynamic content)
-  grid.querySelectorAll('.reveal').forEach(el => {
-    el.classList.add('visible');
-    if(typeof io !== 'undefined') io.unobserve(el);
-  });
+    h += '<div class="hcard-info">';
+    h += '<div class="hname">' + horse.name + '</div>';
+    h += '<div class="hbreed">' + horse.nameJa + (horse.breed ? " ・ " + horse.breed : "") + "</div>";
+    h += '<div class="hdesc">' + horse.desc + "</div>";
+    if (horse.tag) h += '<span class="htag">' + horse.tag + "</span>";
+    h += "</div></div>";
+  }
+  grid.innerHTML = h;
 }
 
-function renderPlans(plans) {
-  const grid = document.getElementById('plans-grid');
+function renderPlans(data) {
+  var grid = document.getElementById("plans-grid");
   if (!grid) return;
-  const delays = ['', 'd1', 'd2'];
-  grid.innerHTML = plans.map((p, i) => {
-    const d = delays[i % 3];
-    const hot = p.hot ? 'hot' : '';
-    const hotBadge = p.hot ? '<div class="pcard.hot::before" style="content:'おすすめ'"></div>' : '';
-    const imgHtml = p.img
-      ? `<div style="height:170px;position:relative;overflow:hidden;background:linear-gradient(160deg,#1E3A2F,#2D5240)">
-           <img src="${p.img}" alt="${p.name}" referrerpolicy="no-referrer"
-                style="width:100%;height:100%;object-fit:cover;object-position:center"
-                onerror="this.style.display='none'">
-         </div>`
-      : `<div class="pcard-no-img" style="background:linear-gradient(160deg,#1E3A2F,#2D5240)">
-           <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="10" stroke="rgba(196,154,48,.5)" stroke-width="2"/><path d="M10 44C10 36 16 30 24 30S38 36 38 44" stroke="rgba(196,154,48,.5)" stroke-width="2"/></svg>
-         </div>`;
-    const reserveBtn = !['esayari','hikiuma'].includes(p.id)
-      ? `<a href="aso-uma-reservation.html?plan=${p.id}" class="pcard-reserve">このプランを予約する →</a>` : '';
-    return `<div class="pcard ${hot} reveal ${d}">
-      ${imgHtml}
-      <div class="pcard-body">
-        <div class="pname">${p.name}</div>
-        <div class="pdur">${[p.dur, p.note].filter(Boolean).join(' · ')}</div>
-        <div class="pdesc">${p.desc||''}</div>
-        <div class="pprice">${p.price}${p.priceNum ? '<small>（税込）</small>' : ''}</div>
-        ${reserveBtn}
-      </div>
-    </div>`;
-  }).join('');
-  // Make all cards visible (bypass IntersectionObserver for dynamic content)
-  grid.querySelectorAll('.reveal').forEach(el => {
-    el.classList.add('visible');
-    if(typeof io !== 'undefined') io.unobserve(el);
-  });
+  var h = "";
+  for (var i = 0; i < data.length; i++) {
+    var p = data[i];
+    var hotClass = p.hot ? " hot" : "";
+    var imgHtml = p.img
+      ? '<div style="height:170px;overflow:hidden;position:relative;background:#1E3A2F"><img src="' + p.img + '" referrerpolicy="no-referrer" style="width:100%;height:100%;object-fit:cover;object-position:center" onerror="this.style.display='none'"></div>'
+      : '<div class="pcard-no-img" style="background:#1E3A2F"></div>';
+    var reserveBtn = (p.id !== "esayari" && p.id !== "hikiuma")
+      ? '<a href="aso-uma-reservation.html?plan=' + p.id + '" class="pcard-reserve">このプランを予約する →</a>'
+      : "";
+    h += '<div class="pcard' + hotClass + '">';
+    h += imgHtml;
+    h += '<div class="pcard-body">';
+    h += '<div class="pname">' + p.name + "</div>";
+    h += '<div class="pdur">' + p.dur + " ・ " + p.note + "</div>";
+    h += '<div class="pdesc">' + p.desc + "</div>";
+    h += '<div class="pprice">' + p.price + (p.priceNum ? "<small>（税込）</small>" : "") + "</div>";
+    h += reserveBtn;
+    h += "</div></div>";
+  }
+  grid.innerHTML = h;
 }
+
+// Render defaults immediately
+renderHorses(HORSES);
+renderPlans(PLANS);
+
+// Override with admin data if available
+(function() {
+  fetch("/.netlify/functions/get-content")
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (d && d.horses && d.horses.length) renderHorses(d.horses);
+      if (d && d.plans && d.plans.length) renderPlans(d.plans);
+    })
+    .catch(function() {});
+})();
 </script>
 
 </body>
