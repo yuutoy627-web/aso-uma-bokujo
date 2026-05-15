@@ -303,28 +303,31 @@ async function doLogin() {
   
   setLoading(true);
   try {
-    // Verify password by attempting a read operation
-    const res = await fetch('/.netlify/functions/get-content');
-    if (!res.ok) throw new Error('Network error');
-    const data = await res.json();
-
-    // Try a write to verify password (empty write with current data won't change anything)
-    const testRes = await fetch('/.netlify/functions/update-content', {
+    // Step 1: Verify password with dedicated auth endpoint
+    const authRes = await fetch('/.netlify/functions/verify-auth', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ password: pw, type: 'horses', data: data.horses })
+      body: JSON.stringify({ password: pw })
     });
-    const testData = await testRes.json();
     
-    if (!testRes.ok || testData.error) {
+    if (!authRes.ok) {
       showLoginError();
       return;
     }
     
     PASSWORD = pw;
     sessionStorage.setItem('aso_admin_token', btoa(pw + ':' + Date.now()));
-    horses = data.horses;
-    plans  = data.plans;
+    
+    // Step 2: Load content
+    try {
+      const dataRes = await fetch('/.netlify/functions/get-content');
+      if (dataRes.ok) {
+        const data = await dataRes.json();
+        horses = data.horses || [];
+        plans  = data.plans  || [];
+      }
+    } catch { /* use defaults */ }
+    
     showAdmin();
   } catch {
     showLoginError();
