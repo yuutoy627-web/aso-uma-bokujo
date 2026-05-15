@@ -606,6 +606,11 @@ function renderHorses(horses) {
       </div>
     </div>`;
   }).join('');
+  // Make all cards visible (bypass IntersectionObserver for dynamic content)
+  grid.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('visible');
+    if(typeof io !== 'undefined') io.unobserve(el);
+  });
 }
 
 function renderPlans(plans) {
@@ -638,6 +643,11 @@ function renderPlans(plans) {
       </div>
     </div>`;
   }).join('');
+  // Make all cards visible (bypass IntersectionObserver for dynamic content)
+  grid.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('visible');
+    if(typeof io !== 'undefined') io.unobserve(el);
+  });
 }
 </script>
 
